@@ -1,0 +1,24 @@
+.navbar{
+    background-color: #24A69C !important;
+    color: #fff;
+}
+
+.btn_buscar{
+    background-color: #F28B26;
+    color: #fff;
+}
+.icon_navBar{
+    margin-left: 15px;
+    cursor: pointer;
+}
+.span_fecha{
+    margin-right: 15px;
+}
+
+/*Modal*/
+.modal-title{
+    margin: 0 auto;
+}
+button.close.cerrar_modal{
+    margin-left: 0;
+}

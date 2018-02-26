@@ -1,3 +1,29 @@
-<p>
-  buscador works!
-</p>
+<nav class="navbar bg-light ">
+  <a class="navbar-brand"><strong>Salud Te Integra</strong></a>
+  <div class="form-inline float-right">
+    <span class="span_fecha">Fecha</span>
+    <button class="btn_buscar btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-search"></i> Buscar</button>
+    <i class="icon_navBar fas fa-user-circle fa-lg"></i>
+  </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Buscar Usuario</h5>
+          <button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn_buscar">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
