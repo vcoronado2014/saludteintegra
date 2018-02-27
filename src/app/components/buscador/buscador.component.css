@@ -8,17 +8,54 @@
     color: #fff;
 }
 .icon_navBar{
-    margin-left: 15px;
+    /*margin-left: -15px;*/
     cursor: pointer;
 }
 .span_fecha{
     margin-right: 15px;
 }
+.dropdown-menu{
+    margin: 0.500rem 0 0;
+    background-color: #24A69C !important;
+    right: 0;
+    left: auto;
+}
+a.dropdown-item{
+    color: #fff;
+    cursor: pointer;
+}
+a.dropdown-item:hover{
+    background-color: #F28B26;
+    color: #fff;
+}
+a.sin_hover:hover{
+    background-color: #24A69C !important;
+    color: #fff;
+    cursor: context-menu;
+}
 
 /*Modal*/
+.modal-content{
+    /*background-color: #24A69C !important;
+    background-color: rgba(36, 166, 156, 0.8);*/
+    border-radius: .6rem;
+}
+.modal-header{
+    border-bottom: none;
+    background-color: #24A69C !important;
+    color: #fff;
+}
 .modal-title{
     margin: 0 auto;
+    /*color: #fff;*/
+    font-size: 2rem;
+}
+.modal-footer{
+    border-top: none;
 }
 button.close.cerrar_modal{
-    margin-left: 0;
+    margin-left: -20px;
+}
+button.btn-block{
+    margin-top: 0;
 }

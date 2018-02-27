@@ -1,29 +1,48 @@
 <nav class="navbar bg-light ">
-  <a class="navbar-brand"><strong>Salud Te Integra</strong></a>
+  
+  <a class="navbar-brand">
+      <img src="/assets/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+      <span class="text-white">Salud Te Integra</span> 
+    </a>
   <div class="form-inline float-right">
-    <span class="span_fecha">Fecha</span>
-    <button class="btn_buscar btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-search"></i> Buscar</button>
-    <i class="icon_navBar fas fa-user-circle fa-lg"></i>
+    <span class="span_fecha"> {{fecha_actual}}</span>
+    <button class="btn_buscar btn-sm btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal">
+      <i class="fas fa-search"></i> Buscar Paciente
+    </button>
+    <div class="nav-item dropdown">
+      <span class="icon_navBar nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        vcoronado <i class=" fas fa-user-circle fa-lg"></i>
+      </span>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item sin_hover">Víctor Coronado Alarcón</a>
+        <a class="dropdown-item sin_hover">S.S.M.S</a>
+        <a class="dropdown-item">Mantenedor de usuario</a>
+        <a class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</a>
+      </div>
+    </div>
   </div>
 </nav>
 
-<!-- Modal -->
+<!-- Modal Buscar Paciente-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Buscar Usuario</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Buscar Paciente</h5>
           <button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          ...
+        <div class="modal-body text-center">
+          <p>Ingrese el RUN del paciente</p>
+          <input type="text" class="form-control" placeholder="Ingrese RUN">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn_buscar">Buscar</button>
+          <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-block btn_buscar" (click)="buscarRun()">Buscar</button>
         </div>
       </div>
     </div>
   </div>
+
+  <app-visualizar-usuarios></app-visualizar-usuarios>

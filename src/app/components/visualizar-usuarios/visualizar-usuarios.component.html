@@ -1,0 +1,131 @@
+<div class="container mt-4">
+
+  <div class="row ">
+    <div class="col">
+      <div class="form-inline justify-content-between">
+          <button type="button" class="btn btn_naranja" data-toggle="modal" data-target="#modalCrearUsuario"><i class="fas fa-user-plus"></i> Crear Usuario</button>
+          <div class="input-group">
+              <input type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            </div> 
+          </div>  
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Crear Usuario-->
+  <div class="modal fade bd-example-modal-lg" id="modalCrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <!-- header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
+          <button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- body -->
+        <div class="modal-body">
+          <p class="text-center">Ingrese todos los campos para crear un nuevo usuario</p> 
+
+  
+          <div class="col-md-10 offset-md-1">
+            <form>
+              <div class="form-group">
+                <label for="inputUser">Nombre de usuario</label>
+                <input type="text" class="form-control" id="inputUser" placeholder="Usuario" [(ngModel)]="nuevoUsuario" name="nuevoUsuario">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Nombre</label>
+                  <input type="text" class="form-control" id="inputEmail4" placeholder="Nombre" [(ngModel)]="nuevoUsuarioNombre" name="nuevoUsuarioNombre">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">Apellidos</label>
+                  <input type="text" class="form-control" id="inputPassword4" placeholder="Apellidos" [(ngModel)]="nuevoUsuarioApellido" name="nuevoUsuarioApellido">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail">Correo</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="ejemplo@email.com" [(ngModel)]="nuevoUsuarioCorreo" name="nuevoUsuarioCorreo">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="telefono1">Teléfono de contacto 1</label>
+                  <input type="number" class="form-control" id="telefono1" placeholder="Teléfono 1" [(ngModel)]="nuevoUsuarioTelefono1" name="nuevoUsuarioTelefono1">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="telefono2">Teléfono de contacto 2</label>
+                  <input type="number" class="form-control" id="telefono2" placeholder="Teléfono 2" [(ngModel)]="nuevoUsuarioTelefono2" name="nuevoUsuarioTelefono2">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputAddress2">Entidad contratante</label>
+                <select type="select" class="form-control" id="inputAddress2" placeholder="Entidad contratante"></select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="telefono1">Contraseña</label>
+                  <input type="password" class="form-control" id="telefono1" placeholder="Contraseña" [(ngModel)]="nuevoUsuarioContrasena1" name="nuevoUsuarioContrasena1">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="telefono2">Repita la contraseña</label>
+                  <input type="password" class="form-control" id="telefono2" placeholder="Repetir contraseña" [(ngModel)]="nuevoUsuarioContrasena2" name="nuevoUsuarioContrasena2">
+                </div>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+        <!-- footer -->
+        
+        <div class="col-md-10 offset-md-1 mb-1">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-block btn_naranja" (click)="guargarUsuario()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- table usuarios-->
+  <table class="table table-hover mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Nombre Completo</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">vcoronado</th>
+        <td>Víctor Coronado</td>
+        <td>vcoronado@rayensalud.com</td>
+        <td>Admin</td>
+        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
+      </tr>
+      <tr>
+        <th scope="row">mrojas</th>
+        <td>María P. Rojas</td>
+        <td>mrojas@rayensalud.com</td>
+        <td>Admin</td>
+        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
+      </tr>
+      <tr>
+        <th scope="row">brios</th>
+        <td>Berenisse Rios</td>
+        <td>brios@rayensalud.com</td>
+        <td>Admin</td>
+        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,36 @@
+.btn_naranja{
+    background-color: #F28B26;
+    color: #fff;
+}
+.input_ingreseUsuario{
+    width: 250px;   
+}
+thead{
+    background-color: #24A69C !important;
+    color: #fff;
+}
+
+/*Modal*/
+.modal-content{
+    /*background-color: #24A69C !important;
+    background-color: rgba(36, 166, 156, 0.8);*/
+    border-radius: .6rem;
+}
+.modal-header{
+    border-bottom: none;
+    background-color: #24A69C !important;
+    color: #fff;
+}
+.modal-title{
+    margin: 0 auto;
+    font-size: 2rem;
+}
+button.close.cerrar_modal{
+    margin-left: -20px;
+}
+.modal-footer{
+    border-top: none;
+}
+button.btn-block{
+    margin-top: 0;
+}
