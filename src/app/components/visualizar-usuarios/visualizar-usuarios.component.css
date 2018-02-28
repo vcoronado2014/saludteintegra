@@ -5,6 +5,13 @@
 .input_ingreseUsuario{
     width: 250px;   
 }
+
+/*Tabla*/
+.iconos_editar{
+    color: #F28B26;
+    margin-right: 13px;
+    cursor: pointer;
+}
 thead{
     background-color: #24A69C !important;
     color: #fff;

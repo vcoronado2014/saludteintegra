@@ -32,18 +32,24 @@
   
           <div class="col-md-10 offset-md-1">
             <form>
-              <div class="form-group">
-                <label for="inputUser">Nombre de usuario</label>
-                <input type="text" class="form-control" id="inputUser" placeholder="Usuario" [(ngModel)]="nuevoUsuario" name="nuevoUsuario">
+              <div class="form-row">
+                <div class="form-group col-md 6">
+                  <label for="inputUser">Nombre usuario</label>
+                  <input type="text" class="form-control" id="inputUser" placeholder="Usuario" [(ngModel)]="nuevoUsuario" name="nuevoUsuario">
+                </div>
+                <div class="form-group col-md 6">
+                  <label for="inputRun">RUN usuario</label>
+                  <input type="text" class="form-control" id="inputRun" placeholder="12.345.678-k" [(ngModel)]="nuevoUsuarioRun" name="nuevoUsuarioRun">
+                </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="inputEmail4">Nombre</label>
-                  <input type="text" class="form-control" id="inputEmail4" placeholder="Nombre" [(ngModel)]="nuevoUsuarioNombre" name="nuevoUsuarioNombre">
+                  <label for="inputNombre">Nombre</label>
+                  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" [(ngModel)]="nuevoUsuarioNombre" name="nuevoUsuarioNombre">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="inputPassword4">Apellidos</label>
-                  <input type="text" class="form-control" id="inputPassword4" placeholder="Apellidos" [(ngModel)]="nuevoUsuarioApellido" name="nuevoUsuarioApellido">
+                  <label for="inputApellidos">Apellidos</label>
+                  <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos" [(ngModel)]="nuevoUsuarioApellidos" name="nuevoUsuarioApellidos">
                 </div>
               </div>
               <div class="form-group">
@@ -53,27 +59,43 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="telefono1">Teléfono de contacto 1</label>
-                  <input type="number" class="form-control" id="telefono1" placeholder="Teléfono 1" [(ngModel)]="nuevoUsuarioTelefono1" name="nuevoUsuarioTelefono1">
+                  <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" [(ngModel)]="nuevoUsuarioTelefono1" name="nuevoUsuarioTelefono1">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="telefono2">Teléfono de contacto 2</label>
-                  <input type="number" class="form-control" id="telefono2" placeholder="Teléfono 2" [(ngModel)]="nuevoUsuarioTelefono2" name="nuevoUsuarioTelefono2">
+                  <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" [(ngModel)]="nuevoUsuarioTelefono2" name="nuevoUsuarioTelefono2">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputAddress2">Entidad contratante</label>
-                <select type="select" class="form-control" id="inputAddress2" placeholder="Entidad contratante"></select>
+              
+                <select class="custom-select" class="form-control" id="inputAddress2" [(ngModel)]="nuevoUsuarioEntidad" name="nuevoUsuarioEntidad">
+                  <option value="">Entidad contratante</option>
+                  <option value="Entidad 1">Entidad 1</option>
+                  <option value="Entidad 2">Entidad 2</option>
+                  <option value="Entidad 3">Entidad 3</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="inputRol">Seleccione rol del usuario</label>
+              
+                <select class="custom-select" class="form-control" id="inputRol" [(ngModel)]="nuevoUsuarioRol" name="nuevoUsuarioRol">
+                    <option value="">Seleccione rol del usuario</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Usuario">Usuario</option>
+                  </select>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="telefono1">Contraseña</label>
-                  <input type="password" class="form-control" id="telefono1" placeholder="Contraseña" [(ngModel)]="nuevoUsuarioContrasena1" name="nuevoUsuarioContrasena1">
+                  <label for="contrasena1">Contraseña</label>
+                  <input type="password" class="form-control" id="contrasena1" placeholder="Contraseña" [(ngModel)]="nuevoUsuarioContrasena1" name="nuevoUsuarioContrasena1">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="telefono2">Repita la contraseña</label>
-                  <input type="password" class="form-control" id="telefono2" placeholder="Repetir contraseña" [(ngModel)]="nuevoUsuarioContrasena2" name="nuevoUsuarioContrasena2">
+                  <label for="contrasena2">Repita la contraseña</label>
+                  <input type="password" class="form-control" id="contrasena2" placeholder="Repetir contraseña" [(ngModel)]="nuevoUsuarioContrasena2" name="nuevoUsuarioContrasena2">
                 </div>
               </div>
               
@@ -102,6 +124,7 @@
         <th scope="col">Correo</th>
         <th scope="col">Rol</th>
         <th scope="col">Estado</th>
+        <th scope="col">Estado</th>
       </tr>
     </thead>
     <tbody>
@@ -110,22 +133,33 @@
         <td>Víctor Coronado</td>
         <td>vcoronado@rayensalud.com</td>
         <td>Admin</td>
-        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
+        <td>Inactivo</td>
+        <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>
       </tr>
       <tr>
         <th scope="row">mrojas</th>
         <td>María P. Rojas</td>
         <td>mrojas@rayensalud.com</td>
         <td>Admin</td>
-        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
+        <td>Activo</td>
+        <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-times-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>
       </tr>
       <tr>
         <th scope="row">brios</th>
         <td>Berenisse Rios</td>
         <td>brios@rayensalud.com</td>
         <td>Admin</td>
-        <td><button class="btn btn_naranja btn-sm">Editar</button><button class="btn btn_naranja btn-sm ml-2">Ver</button> </td>
-      </tr>
+        <td>Inactivo</td>
+        <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>      </tr>
+      <tr>
+        <th scope="row">mrojas</th>
+        <td>María P. Rojas</td>
+        <td>mrojas@rayensalud.com</td>
+        <td>Usuario</td>
+        <td>Activo</td>
+        <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-times-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>      </tr>
     </tbody>
   </table>
 </div>
+
+
