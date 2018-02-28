@@ -52,9 +52,13 @@ export class VisualizarUsuariosComponent implements OnInit {
         data => {
           if (data){
             var lista = data.json();
+          
             //este arreglo habria que recorrerlo con un ngfor 
             if (lista.Datos){
               this.listaUsuarios = lista.Datos;
+              
+
+              console.log(this.listaUsuarios);
             }
             else{
               //levantar un modal que hubo un error

@@ -11,6 +11,8 @@ export class BuscadorComponent implements OnInit {
   fecha_actual:any;
   usuario: any;
   nombreCompleto: string;
+  usuarioUser:string;
+  nombreEntidadContratante:string;
 
   constructor(private router: Router) {
 
@@ -19,10 +21,13 @@ export class BuscadorComponent implements OnInit {
   ngOnInit() {
     moment.locale('es');
     this.fecha_actual = moment().format('L');
+
     if (sessionStorage.getItem("Usuario") != null){
       this.usuario = JSON.parse(sessionStorage.getItem("Usuario"));
+      this.usuarioUser = this.usuario.AutentificacionUsuario.NombreUsuario;
       this.nombreCompleto = this.usuario.Persona.Nombres + ' ' + this.usuario.Persona.ApellidoPaterno + ' ' + this.usuario.Persona.ApellidoMaterno;
-
+      this.nombreEntidadContratante = this.usuario.EntidadContratante.RazonSocial;
+      console.log(this.usuario);
     }
     else{
       console.log('usuario nulo');
@@ -39,6 +44,7 @@ export class BuscadorComponent implements OnInit {
   cerrarSesion(){
     alert("¿Estás seguro que quieres cerrar sesión?");
   }
+
   abrirMantenedorUsuario(){
     console.log('abrir mantenedor');
     this.router.navigate(['/visor'])
