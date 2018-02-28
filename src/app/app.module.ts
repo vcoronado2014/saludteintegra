@@ -1,13 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'; 
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+//Rutas
 import { app_routing } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { EspacioVisorComponent } from './components/espacio-visor/espacio-visor.component';
-//servicios
+
+//Servicios
 import { ServicioLoginService } from './services/servicio-login.service';
 
 
@@ -20,9 +25,15 @@ import { ServicioLoginService } from './services/servicio-login.service';
   ],
   imports: [
     BrowserModule,
-    app_routing
+    app_routing,
+    HttpClientModule,
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [ServicioLoginService],
+  providers: [
+    ServicioLoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
