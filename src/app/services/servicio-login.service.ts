@@ -11,7 +11,10 @@ export class ServicioLoginService{
   loggedIn:boolean;
   mensajeError:string;
 
-  constructor( private http: Http){
+  constructor( 
+    private http: Http,
+    public httpClient: HttpClient
+  ){
 
     //inicializamos los valores
     this.username = "";
@@ -26,7 +29,9 @@ export class ServicioLoginService{
     let dataGet = { usuario: usuario, password: password };
 
    return this.http.post(url, dataGet, {headers: new Headers({'Content-Type': 'application/json'})})
-      .map((res:Response) => res.json())
+      .map((data) => 
+      data.json()
+    )
       .map(data =>{
        
         //control de errores
@@ -34,26 +39,30 @@ export class ServicioLoginService{
           this.loggedIn = false;
           this.mensajeError = "Usuario no existe";
         }
-        if (data.Mensaje.Codigo == "2"){
+        else if (data.Mensaje.Codigo == "2"){
           this.loggedIn = false;
           this.mensajeError = "Contraseña inválida";
         }
-        //respuesta correcta
-        if(data.Mensaje.Codigo == "0"){
+        else if (data.Mensaje.Codigo == "0") {
+          //respuesta correcta
+
           var user = data.Datos.AutentificacionUsuario.NombreUsuario;
           var pass = data.Datos.AutentificacionUsuario.Password;
 
           sessionStorage.setItem('usuario', user);
           sessionStorage.setItem('contraseña', pass);
+          sessionStorage.setItem("Usuario", data.Datos);
 
           this.loggedIn = true;
-          
-        }else{
+          this.mensajeError = data.Mensaje.Texto;
+
+        }
+        else {
           this.loggedIn = false;
           this.mensajeError = "Error de comunicación con el servidor";
         }
              
-
+        return this.loggedIn;
       });
     
   }
