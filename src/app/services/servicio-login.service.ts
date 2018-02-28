@@ -1,25 +1,80 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import {appSettings } from '../appSettings';
+import { Injectable, Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Http, Headers, Response } from '@angular/http';
+import { appSettings } from '../appSettings';
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ServicioLoginService{
-  constructor(
-    private http: Http
+  username:string;
+  loggedIn:boolean;
+  mensajeError:string;
+
+  constructor( 
+    private http: Http,
+    public httpClient: HttpClient
   ){
+
     //inicializamos los valores
+    this.username = "";
+    this.loggedIn = false;
+    this.mensajeError = "Error en llamada Http";
+
   }
 
-  get(usuario, password){
+  login(usuario, password){
+
     let url = appSettings.API_ENDPOINT + 'Login';
     let dataGet = { usuario: usuario, password: password };
 
-    let data = this.http.post(url, dataGet, {
-      headers: new Headers({'Content-Type': 'application/json'})
-    });
-    return data;
+   return this.http.post(url, dataGet, {headers: new Headers({'Content-Type': 'application/json'})})
+      .map((data) => 
+      data.json()
+    )
+      .map(data =>{
+       
+        //control de errores
+        if(data.Mensaje.Codigo == "1"){
+          this.loggedIn = false;
+          this.mensajeError = "Usuario no existe";
+        }
+        else if (data.Mensaje.Codigo == "2"){
+          this.loggedIn = false;
+          this.mensajeError = "Contraseña inválida";
+        }
+        else if (data.Mensaje.Codigo == "0") {
+          //respuesta correcta
+
+          var user = data.Datos.AutentificacionUsuario.NombreUsuario;
+          var pass = data.Datos.AutentificacionUsuario.Password;
+
+          sessionStorage.setItem('usuario', user);
+          sessionStorage.setItem('contraseña', pass);
+          sessionStorage.setItem("Usuario", data.Datos);
+
+          this.loggedIn = true;
+          this.mensajeError = data.Mensaje.Texto;
+
+        }
+        else {
+          this.loggedIn = false;
+          this.mensajeError = "Error de comunicación con el servidor";
+        }
+             
+        return this.loggedIn;
+      });
+    
+  }
+  logout():void{
+    sessionStorage.clear();
+    this.username = "";
+    this.loggedIn = false;
+
+  }
+    isLoggedId(){
+    return this.loggedIn;
   }
 
 }
+
