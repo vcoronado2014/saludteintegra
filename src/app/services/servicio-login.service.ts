@@ -12,8 +12,7 @@ export class ServicioLoginService{
   mensajeError:string;
 
   constructor( 
-    private http: Http,
-    public httpClient: HttpClient
+    private http: Http
   ){
 
     //inicializamos los valores
@@ -51,7 +50,8 @@ export class ServicioLoginService{
 
           sessionStorage.setItem('usuario', user);
           sessionStorage.setItem('contraseña', pass);
-          sessionStorage.setItem("Usuario", data.Datos);
+          var userGuardar = JSON.stringify(data.Datos);
+          sessionStorage.setItem("Usuario", userGuardar);
 
           this.loggedIn = true;
           this.mensajeError = data.Mensaje.Texto;

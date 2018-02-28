@@ -16,6 +16,7 @@ import { VisualizarUsuariosComponent } from './components/visualizar-usuarios/vi
 
 //Servicios
 import { ServicioLoginService } from './services/servicio-login.service';
+import { UsuarioService } from './services/usuario.service';
 
 
 
@@ -35,7 +36,8 @@ import { ServicioLoginService } from './services/servicio-login.service';
     FormsModule
   ],
   providers: [
-    ServicioLoginService
+    ServicioLoginService,
+    UsuarioService
   ],
   bootstrap: [AppComponent]
 })

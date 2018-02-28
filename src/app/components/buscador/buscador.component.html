@@ -14,9 +14,9 @@
         vcoronado <i class=" fas fa-user-circle fa-lg"></i>
       </span>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item sin_hover">Víctor Coronado Alarcón</a>
+        <a class="dropdown-item sin_hover">{{nombreCompleto}}</a>
         <a class="dropdown-item sin_hover">S.S.M.S</a>
-        <a class="dropdown-item">Mantenedor de usuario</a>
+        <a class="dropdown-item" (click)="abrirMantenedorUsuario()">Mantenedor de usuario</a>
         <a class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</a>
       </div>
     </div>
