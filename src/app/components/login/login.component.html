@@ -1,17 +1,19 @@
-<div class="caja" >
+<div class="container-fluid caja" >
+	<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 	<div class="login-box">
 	  <h1>Accesos</h1>
 	  <section class="ingreso">
-			<input required class="main-form" type="text" name="loginUsuario" [(ngModel)]="loginUsuario" placeholder="Usuario">
-			<input required class="main-form" type="password"  name="loginPassword" [(ngModel)]="loginPassword" placeholder="Contraseña">
-			<button class="btn btn-block"(click)="Inicio()">Iniciar Sesión</button>
+			<input required class="main-form" (keyup.enter)="Inicio()" type="text" name="loginUsuario" [(ngModel)]="loginUsuario" placeholder="Usuario">
+			<input required class="main-form" (keyup.enter)="Inicio()" type="password"  name="loginPassword" [(ngModel)]="loginPassword" placeholder="Contraseña">
+			<button class="btn btn-block"(click)="Inicio()" >Iniciar Sesión</button>
 	  </section>
 	</div>
-	<div class="container " ng-if="isLogged=false">
-		<div class="row">
-			<div class="col-md-12 text-center">
+	<div *ngIf="errorLog">
+		<div class="row text-center">
+				<div class="text-center errorBox warning">
 				<p>{{errorLog}}</p>
 			</div>
+
 		</div>
 	</div>
 </div>

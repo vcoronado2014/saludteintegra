@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingModule } from 'ngx-loading';
 
 //Rutas
 import { app_routing } from './app.routes';
@@ -29,7 +30,7 @@ import { ServicioLoginService } from './services/servicio-login.service';
     HttpClientModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    LoadingModule
   ],
   providers: [
     ServicioLoginService
