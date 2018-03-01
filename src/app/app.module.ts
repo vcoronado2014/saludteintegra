@@ -17,6 +17,8 @@ import { VisualizarUsuariosComponent } from './components/visualizar-usuarios/vi
 //Servicios
 import { ServicioLoginService } from './services/servicio-login.service';
 import { UsuarioService } from './services/usuario.service';
+import { RolService } from './services/rol.service';
+import { ContratanteService } from './services/contratante.service';
 
 
 
@@ -37,7 +39,9 @@ import { UsuarioService } from './services/usuario.service';
   ],
   providers: [
     ServicioLoginService,
-    UsuarioService
+    UsuarioService,
+    RolService,
+    ContratanteService
   ],
   bootstrap: [AppComponent]
 })
