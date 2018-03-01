@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Modal Crear Usuario-->
   <div class="modal fade bd-example-modal-lg" id="modalCrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -29,7 +29,6 @@
         <div class="modal-body">
           <p class="text-center">Ingrese todos los campos para crear un nuevo usuario</p> 
 
-  
           <div class="col-md-10 offset-md-1">
             <form>
               <div class="form-row">
@@ -113,44 +112,98 @@
       </div>
     </div>
   </div>
+  <!--Modal Eliminar Usuario-->
+  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Usuario</h5>
+          <button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-center">¿Estás seguro de eliminar este usuario?</p>
+          <p class="text-center">Al eliminar este usuario dejará de existir y no podrás visualizar sus datos en el futuro.</p>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn_naranja"(click)="deleteUser()" data-dismiss="deleteUser">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal Activar/desactivar Usuario-->
+  <div class="modal fade" id="activeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Desactivar Usuario</h5>
+          <button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-center">¿Estás seguro de desactivar este usuario?</p>
+          <p class="text-center">Al desactivar un usuario este dejará realizar acciones en el futuro.</p>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn_naranja"(click)="activeUser()" data-dismiss="activeUser">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-  <!-- table usuarios-->
+  
+    <!-- table usuarios-->
   <div *ngIf="!listaUsuarios">
     <div class="text-center">
         Aún no hay usuarios creados
     </div> 
   </div>
   <div *ngIf="listaUsuarios">
-  <table class="table table-hover mt-4">
-      
-        <thead>
-          <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Nombre Completo</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let usuario of listaUsuarios">
-            <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
+    <table class="table table-hover mt-4">
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of listaUsuarios">
+          <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
             <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
             <td>{{usuario.Persona.CorreoElectronico}}</td>
             <td>{{usuario.Rol.Nombre}}</td>
             <td *ngIf="usuario.Rol.Activo == 1">Activo</td>
             <td *ngIf="usuario.Rol.Activo == 0">Inactivo</td>
             <td>
-              <i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i>
-              <i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i>
-              <i class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i>
-              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>
+              <i type="button" class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip modal" data-placement="bottom" data-target="#editUser" title="Editar usuario"></i>
+              <i type="button" class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i>
+              <i type="button" class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i>
+              <i type="button" class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i>
+            </td>
           </tr>
-        </tbody>
-  </table>
-</div>
+          </tbody>
+    </table>
+    <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Editar usuario"></i>
+    <i class="fas fa-eye fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Ver usuario"></i>
+    <i class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#activeUser" title="Desactivar/Activar usuario"></i>
+    <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#deleteUser" title="Eliminar usuario"></i>
+
+  </div>
+
 </div>
 
 

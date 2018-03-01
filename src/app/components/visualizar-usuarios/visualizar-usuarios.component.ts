@@ -11,11 +11,13 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./visualizar-usuarios.component.css']
 })
 export class VisualizarUsuariosComponent implements OnInit {
+
   //listado de datos
   listaUsuarios;
   listaRoles;
   listaContratantes;
   estadoDelUsuario;
+  loading = false;
   //usuario logueado
   usuario: any;
 
@@ -137,4 +139,9 @@ export class VisualizarUsuariosComponent implements OnInit {
       );
 
   }
+  deleteUser(){
+    //eliminar usuarios
+    this.loading = true;      
+  }
 }
+
