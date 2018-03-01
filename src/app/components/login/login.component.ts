@@ -20,24 +20,30 @@ export class LoginComponent {
   isLogged; 
   errorLog:string;
   usuario: any;
+  loading = false;
 
   constructor( private auth:ServicioLoginService,
                private router: Router ) { }
   
   
   Inicio(){
-    //debugger;
+    
     if (!this.loginUsuario ){
       return this.errorLog = "Nombre de usuario requerido";
     }
     if(!this.loginPassword){
+        
       return this.errorLog = "Contraseña requerida";
     }
+
+    this.loading = true;
     this.auth.login(this.loginUsuario,this.loginPassword).subscribe(
       rs => { 
+        this.loading = false;
         this.isLogged = rs;
       },
       er => {
+        this.loading = false;
         console.log('incorrecto' + er);
         this.errorLog = this.auth.mensajeError;
       },

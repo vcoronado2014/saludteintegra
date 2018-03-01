@@ -15,6 +15,7 @@ export class VisualizarUsuariosComponent implements OnInit {
   listaUsuarios;
   listaRoles;
   listaContratantes;
+  estadoDelUsuario;
   //usuario logueado
   usuario: any;
 
