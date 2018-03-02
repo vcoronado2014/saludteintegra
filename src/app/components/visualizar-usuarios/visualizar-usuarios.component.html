@@ -135,7 +135,7 @@
       </div>
     </div>
   </div>
-  <!--Modal Activar/desactivar Usuario-->
+  <!--Modal Activar/desactivar Usuario
   <div class="modal fade" id="activeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -158,9 +158,7 @@
         </div>
       </div>
     </div>
-  </div>
-
-
+  </div>-->
   
     <!-- table usuarios-->
   <div *ngIf="!listaUsuarios">
@@ -186,24 +184,18 @@
             <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
             <td>{{usuario.Persona.CorreoElectronico}}</td>
             <td>{{usuario.Rol.Nombre}}</td>
-            <td *ngIf="usuario.Rol.Activo == 1">Activo</td>
-            <td *ngIf="usuario.Rol.Activo == 0">Inactivo</td>
+            <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
+            <td *ngIf="usuario.AutentificacionUsuario.Activo == 0">Inactivo</td>
             <td>
               <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Editar usuario"></i>
               <i class="fas fa-eye fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Ver usuario"></i>
-              <i class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#activeUser" title="Desactivar/Activar usuario"></i>
-              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#deleteUser" title="Eliminar usuario"></i>
+              <i class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="desactivarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
+              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#deleteUser"  title="Eliminar usuario"></i>
             </td>
           </tr>
           </tbody>
     </table>
-    <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Editar usuario"></i>
-    <i class="fas fa-eye fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Ver usuario"></i>
-    <i class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#activeUser" title="Desactivar/Activar usuario"></i>
-    <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#deleteUser" title="Eliminar usuario"></i>
-
   </div>
-
 </div>
 
 

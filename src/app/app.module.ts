@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { LoadingModule } from 'ngx-loading';
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule } from '../../node_modules/ngx-modialog/plugins/bootstrap';
 
 //Rutas
 import { app_routing } from './app.routes';
@@ -36,7 +38,9 @@ import { ContratanteService } from './services/contratante.service';
     HttpClientModule,
     HttpModule,
     FormsModule,
-    LoadingModule
+    LoadingModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
   ],
   providers: [
     ServicioLoginService,

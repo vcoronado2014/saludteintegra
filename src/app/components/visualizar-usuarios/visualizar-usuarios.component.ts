@@ -4,7 +4,10 @@ import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs/Observable';
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
 
+bootstrap4Mode();
 @Component({
   selector: 'app-visualizar-usuarios',
   templateUrl: './visualizar-usuarios.component.html',
@@ -37,7 +40,8 @@ export class VisualizarUsuariosComponent implements OnInit {
     private usu:UsuarioService,
     private rol:RolService,
     private con:ContratanteService,
-    private router: Router
+    private router: Router,
+    public modal:Modal
   ) {
       this.listaUsuarios = [];
       this.listaRoles = [];
@@ -139,9 +143,28 @@ export class VisualizarUsuariosComponent implements OnInit {
       );
 
   }
-  deleteUser(){
+  deleteUser(user){
     //eliminar usuarios
     this.loading = true;      
   }
-}
+  desactivarUsuario(usuario){
+    console.log(usuario);
+    this.modal.confirm()
+    .size('lg')
+    .showClose(true)
+    .title('A simple Alert style modal window')
+    .body(`
+        <h4>Alert is a classic (title/body/footer) 1 button modal window that 
+        does not block.</h4>
+        <b>Configuration:</b>
+        <ul>
+            <li>Non blocking (click anywhere outside to dismiss)</li>
+            <li>Size large</li>
+            <li>Dismissed with default keyboard key (ESC)</li>
+            <li>Close wth button click</li>
+            <li>HTML content</li>
+        </ul>`)
+    .open();
 
+  } 
+}
