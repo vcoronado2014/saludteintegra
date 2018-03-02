@@ -149,22 +149,88 @@ export class VisualizarUsuariosComponent implements OnInit {
   }
   desactivarUsuario(usuario){
     console.log(usuario);
-    this.modal.confirm()
-    .size('lg')
-    .showClose(true)
-    .title('A simple Alert style modal window')
-    .body(`
-        <h4>Alert is a classic (title/body/footer) 1 button modal window that 
-        does not block.</h4>
-        <b>Configuration:</b>
-        <ul>
-            <li>Non blocking (click anywhere outside to dismiss)</li>
-            <li>Size large</li>
-            <li>Dismissed with default keyboard key (ESC)</li>
-            <li>Close wth button click</li>
-            <li>HTML content</li>
-        </ul>`)
-    .open();
+    const dialogRef = this.modal.confirm()
+                    .size('lg')
+                    .showClose(false)
+                    .title('Desactivar Usuario')
+                    .keyboard(27)
+                    .body(`
+                        <h4 class="text-center">¿Estás seguro de desactivar a este usuario?</h4>
+                        <p class="text-center">Al desactivarlo no podrás visualizar sus datos en el futuro.</p>`)
+                    .open();
+
+    dialogRef.result
+    .then( result => {
+        //alert(`The result is: ${result}`);
+        if (result){
+          //gatilla la accion de desactivar
+          this.usu.desactivarUser(usuario.AutentificacionUsuario.Id.toString()).subscribe(
+            data => {
+              if (data){
+                var usuarioCambiado = data.json();
+              
+                //este arreglo habria que recorrerlo con un ngfor 
+                if (usuarioCambiado.Datos){
+                  console.log(usuarioCambiado.Datos);
+                  console.log(usuarioCambiado.Mensaje);
+                }
+                else{
+                  //levantar un modal que hubo un error
+                  console.log('error');
+                }
+    
+              }
+            },
+            err => console.error(err),
+            () => console.log('get info contratantes')
+          );
+        }
+      }
+    );
+
+  } 
+  activarUsuario(usuario){
+    console.log(usuario);
+    const dialogRef = this.modal.confirm()
+                    .size('lg')
+                    .showClose(false)
+                    .title('Activar Usuario')
+                    .keyboard(27)
+                    .body(`
+                    <h4 class="text-center">¿Estás seguro de activar a este usuario?</h4>
+                    <p class="text-center">Al activarlo podrás visualizar sus datos.</p>`)
+                    .open();
+
+    dialogRef.result
+    .then( result => {
+        //alert(`The result is: ${result}`);
+        if (result){
+          //gatilla la accion de desactivar
+          this.loading = true;
+          this.usu.activarUser(usuario.AutentificacionUsuario.Id.toString()).subscribe(
+            data => {
+              this.loading = false;
+              if (data){
+                var usuarioCambiado = data.json();
+              
+                //este arreglo habria que recorrerlo con un ngfor 
+                if (usuarioCambiado.Datos){
+                  console.log(usuarioCambiado.Datos);
+                  console.log(usuarioCambiado.Mensaje);
+                }
+                else{
+                  //levantar un modal que hubo un error
+                  console.log('error');
+                }
+    
+              }
+            },
+            err => console.error(err),
+            () => console.log('get info contratantes')
+          );
+        }
+      }
+    );
 
   } 
 }
