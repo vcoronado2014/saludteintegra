@@ -13,10 +13,11 @@ export class BuscadorComponent implements OnInit {
   nombreCompleto: string;
   usuarioUser:string;
   nombreEntidadContratante:string;
+  verMantenedorUsuario:boolean = false;
 
   constructor(private router: Router) {
 
-   }
+  }
 
   ngOnInit() {
     moment.locale('es');
@@ -40,19 +41,16 @@ export class BuscadorComponent implements OnInit {
       )
     }
   }
-
-  cerrarSesion(){
-    alert("¿Estás seguro que quieres cerrar sesión?");
+  buscarRun(){
+    this.verMantenedorUsuario = false;
   }
 
   abrirMantenedorUsuario(){
-    console.log('abrir mantenedor');
-    this.router.navigate(['/visor'])
-    .then(data => console.log(data),
-      error => {
-        console.log(error);
-        
-      }
-    )
+    this.verMantenedorUsuario = true;
   }
+  cerrarSesion(){
+   
+  }
+
+  
 }

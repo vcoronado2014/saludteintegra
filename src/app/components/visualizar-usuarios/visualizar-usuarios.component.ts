@@ -3,6 +3,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
 import { Router } from "@angular/router";
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -22,7 +23,7 @@ export class VisualizarUsuariosComponent implements OnInit {
   nuevoUsuario:string;
   nuevoUsuarioRun:string;
   nuevoUsuarioNombre:string;
-  nuevoUsuarioApellidos:string;
+  nuevoUsuarioApellidoPat:string;
   nuevoUsuarioCorreo:any;
   nuevoUsuarioTelefono1:number;
   nuevoUsuarioTelefono2:number;
@@ -53,8 +54,12 @@ export class VisualizarUsuariosComponent implements OnInit {
     }
   }
 
-  guargarUsuario(){
-    console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidos +
+  onSubmitTemplateBased(){
+    console.log("click");
+  }
+
+  guardarUsuario(){
+    console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidoPat +
                 this.nuevoUsuarioCorreo + this.nuevoUsuarioTelefono1 + this.nuevoUsuarioTelefono2 + this.nuevoUsuarioEntidad +
                 this.nuevoUsuarioRol + this.nuevoUsuarioContrasena1 + this.nuevoUsuarioContrasena2);
   }

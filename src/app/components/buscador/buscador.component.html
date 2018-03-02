@@ -45,4 +45,7 @@
     </div>
   </div>
 
-  <app-visualizar-usuarios></app-visualizar-usuarios>
+  <div *ngIf="verMantenedorUsuario">
+     <app-visualizar-usuarios></app-visualizar-usuarios>
+  </div>
+ 

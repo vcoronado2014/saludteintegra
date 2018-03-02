@@ -25,91 +25,100 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <!-- body -->
+        <!-- body-->
         <div class="modal-body">
-          <p class="text-center">Ingrese todos los campos para crear un nuevo usuario</p> 
 
-  
-          <div class="col-md-10 offset-md-1">
-            <form>
+          <div class="col-md-12 ">
+            <form novalidate #f="ngForm" (ngSubmit)="guardarUsuarioNuevo()">
               <div class="form-row">
-                <div class="form-group col-md 6">
-                  <label for="inputUser">Nombre usuario</label>
+                <div class="form-group col-md-4">
+                  <label for="inputNombre">Nombre*</label>
+                  <input  type="text" class="form-control" id="inputNombre" placeholder="Nombre" [(ngModel)]="nuevoUsuarioNombre" name="nuevoUsuarioNombre">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputApellidoPaterno">Apellido paterno*</label>
+                  <input  type="text" class="form-control" id="inputApellidoPaterno" placeholder="Apellido paterno" [(ngModel)]="nuevoUsuarioApellidoPat" name="nuevoUsuarioApellidoPat">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputApellidoMaterno">Apellido materno (opcional)</label>
+                  <input type="text" class="form-control" id="inputApellidoMaterno" placeholder="Apellido paterno" [(ngModel)]="nuevoUsuarioApellidoMat" name="nuevoUsuarioApellidoMat">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputUser">Usuario*</label>
                   <input type="text" class="form-control" id="inputUser" placeholder="Usuario" [(ngModel)]="nuevoUsuario" name="nuevoUsuario">
                 </div>
-                <div class="form-group col-md 6">
-                  <label for="inputRun">RUN usuario</label>
+                <div class="form-group col-md-2">
+                  <label for="inputRun">RUN (opcional)</label>
                   <input type="text" class="form-control" id="inputRun" placeholder="12.345.678-k" [(ngModel)]="nuevoUsuarioRun" name="nuevoUsuarioRun">
                 </div>
-              </div>
-              <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="inputNombre">Nombre</label>
-                  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" [(ngModel)]="nuevoUsuarioNombre" name="nuevoUsuarioNombre">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputApellidos">Apellidos</label>
-                  <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos" [(ngModel)]="nuevoUsuarioApellidos" name="nuevoUsuarioApellidos">
+                  <label for="inputEmail">Correo electrónico*</label>
+                  <input type="email" class="form-control" id="inputEmail" placeholder="ejemplo@email.com" [(ngModel)]="nuevoUsuarioCorreo" name="nuevoUsuarioCorreo">
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputEmail">Correo</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="ejemplo@email.com" [(ngModel)]="nuevoUsuarioCorreo" name="nuevoUsuarioCorreo">
-              </div>
+      
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="telefono1">Teléfono de contacto 1</label>
+                  <label for="telefono1">Teléfono de contacto 1 (opcional)</label>
                   <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" [(ngModel)]="nuevoUsuarioTelefono1" name="nuevoUsuarioTelefono1">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="telefono2">Teléfono de contacto 2</label>
+                  <label for="telefono2">Teléfono de contacto 2 (opcional)</label>
                   <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" [(ngModel)]="nuevoUsuarioTelefono2" name="nuevoUsuarioTelefono2">
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="inputAddress2">Entidad contratante</label>
-              
-                <select class="custom-select" class="form-control" id="inputAddress2" [(ngModel)]="nuevoUsuarioEntidad" name="nuevoUsuarioEntidad">
-                  <option value="">Entidad contratante</option>
-                  <option value="Entidad 1">Entidad 1</option>
-                  <option value="Entidad 2">Entidad 2</option>
-                  <option value="Entidad 3">Entidad 3</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="inputRol">Seleccione rol del usuario</label>
-              
-                <select class="custom-select" class="form-control" id="inputRol" [(ngModel)]="nuevoUsuarioRol" name="nuevoUsuarioRol">
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="inputAddress2">Entidad contratante*</label>
+                  <select class="custom-select" class="form-control" id="inputAddress2" [(ngModel)]="nuevoUsuarioEntidad" name="nuevoUsuarioEntidad">
+                    <option value="">Entidad contratante</option>
+                    <option value="Entidad 1">Entidad 1</option>
+                    <option value="Entidad 2">Entidad 2</option>
+                    <option value="Entidad 3">Entidad 3</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputRol">Rol del usuario*</label>
+                  <select class="custom-select" class="form-control" id="inputRol" [(ngModel)]="nuevoUsuarioRol" name="nuevoUsuarioRol">
                     <option value="">Seleccione rol del usuario</option>
                     <option value="Admin">Admin</option>
                     <option value="Usuario">Usuario</option>
                   </select>
+                </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="contrasena1">Contraseña</label>
+                  <label for="contrasena1">Contraseña (opcional)</label>
                   <input type="password" class="form-control" id="contrasena1" placeholder="Contraseña" [(ngModel)]="nuevoUsuarioContrasena1" name="nuevoUsuarioContrasena1">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="contrasena2">Repita la contraseña</label>
+                  <label for="contrasena2">Repita la contraseña (opcional)</label>
                   <input type="password" class="form-control" id="contrasena2" placeholder="Repetir contraseña" [(ngModel)]="nuevoUsuarioContrasena2" name="nuevoUsuarioContrasena2">
                 </div>
               </div>
-              
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-block btn_naranja" (click)="guardarUsuario()">Guardar</button>
+              </div>
             </form>
           </div>
         </div>
-        <!-- footer -->
+        <!-- footer offset-md-1 
         
-        <div class="col-md-10 offset-md-1 mb-1">
+        <div class="col-md-12 mb-1">
           <div class="modal-footer">
             <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-block btn_naranja" (click)="guargarUsuario()">Guardar</button>
+            <button type="submit" class="btn btn-block btn_naranja" (click)="guardarUsuario()">Guardar</button>
           </div>
-        </div>
+        </div> -->
+
+
+
       </div>
     </div>
   </div>
@@ -140,8 +149,8 @@
             <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
             <td>{{usuario.Persona.CorreoElectronico}}</td>
             <td>{{usuario.Rol.Nombre}}</td>
-            <td *ngIf="usuario.Rol.Activo == 1">Activo</td>
-            <td *ngIf="usuario.Rol.Activo == 0">Inactivo</td>
+            <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
+            <td *ngIf="usuario.AutentificacionUsuario.Activo == 0">Inactivo</td>
             <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>
           </tr>
         </tbody>
