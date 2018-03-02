@@ -20,17 +20,22 @@ export class VisualizarUsuariosComponent implements OnInit {
   //usuario logueado
   usuario: any;
 
-  nuevoUsuario:string;
-  nuevoUsuarioRun:string;
-  nuevoUsuarioNombre:string;
-  nuevoUsuarioApellidoPat:string;
-  nuevoUsuarioCorreo:any;
-  nuevoUsuarioTelefono1:number;
-  nuevoUsuarioTelefono2:number;
-  nuevoUsuarioEntidad:string;
-  nuevoUsuarioRol:string;
-  nuevoUsuarioContrasena1:string;
-  nuevoUsuarioContrasena2:string;
+  //formulario
+  forma:FormGroup;
+
+  //parametros para funcion de crearModificarUser()
+  /*nombreUsuario,
+  ecolId,
+  rolId,
+  nombres,
+  primerApellido,
+  segundoApellido,
+  correoElectronico,
+  ausId,
+  password,
+  telefonoContactoUno,
+  telefonoContactoDos,
+  run */
 
   constructor(
     private usu:UsuarioService,
@@ -41,7 +46,26 @@ export class VisualizarUsuariosComponent implements OnInit {
       this.listaUsuarios = [];
       this.listaRoles = [];
       this.listaContratantes = [];
-     }
+
+      this.forma = new FormGroup({
+        'nuevoUsuarioNombre': new FormControl('', [Validators.required,
+                                                   Validators.minLength(3)]),
+        'nuevoUsuarioApellidoPat': new FormControl('', [Validators.required,
+                                                        Validators.minLength(3)]),
+        'nuevoUsuarioApellidoMat': new FormControl(),
+        'nuevoUsuario': new FormControl('', [Validators.required,
+                                             Validators.minLength(3)]),
+        'nuevoUsuarioRun': new FormControl(),
+        'nuevoUsuarioCorreo': new FormControl('', [Validators.required,
+                                                   Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
+        'nuevoUsuarioTelefono1': new FormControl(),
+        'nuevoUsuarioTelefono2': new FormControl(),
+        'nuevoUsuarioEntidad': new FormControl('', Validators.required),
+        'nuevoUsuarioRol': new FormControl('', Validators.required),
+        'nuevoUsuarioContrasena1': new FormControl(),
+        'nuevoUsuarioContrasena2': new FormControl()
+      })
+    }
 
   ngOnInit() {
     if (sessionStorage.getItem("Usuario") != null){
@@ -59,9 +83,18 @@ export class VisualizarUsuariosComponent implements OnInit {
   }
 
   guardarUsuario(){
-    console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidoPat +
-                this.nuevoUsuarioCorreo + this.nuevoUsuarioTelefono1 + this.nuevoUsuarioTelefono2 + this.nuevoUsuarioEntidad +
-                this.nuevoUsuarioRol + this.nuevoUsuarioContrasena1 + this.nuevoUsuarioContrasena2);
+    //console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidoPat +
+               // this.nuevoUsuarioCorreo + this.nuevoUsuarioTelefono1 + this.nuevoUsuarioTelefono2 + this.nuevoUsuarioEntidad +
+                //this.nuevoUsuarioRol + this.nuevoUsuarioContrasena1 + this.nuevoUsuarioContrasena2);
+    console.log(this.forma.value);
+    console.log(this.forma.status);
+    console.log(this.forma.valid);
+    
+    
+
+    /*this.usu.crearModificarUser().subscribe(
+
+    );*/
   }
 
   obtenerListaUsuarios(ecolId, rolId){
@@ -90,6 +123,7 @@ export class VisualizarUsuariosComponent implements OnInit {
       );
 
   }
+
   obtenerListaRoles(rolId){
     //indicador valor
     this.rol.postRoles(rolId).subscribe(
@@ -116,6 +150,7 @@ export class VisualizarUsuariosComponent implements OnInit {
       );
 
   }
+
   obtenerListaContratantes(ecolId, rolId){
     //indicador valor
     this.con.postContratantes(ecolId, rolId).subscribe(
