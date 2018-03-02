@@ -233,4 +233,10 @@ export class VisualizarUsuariosComponent implements OnInit {
     );
 
   } 
+  verUsuario(){
+    //ver usuario
+  }
+  editarUsuario(){
+    //editar usuario
+  }
 }
