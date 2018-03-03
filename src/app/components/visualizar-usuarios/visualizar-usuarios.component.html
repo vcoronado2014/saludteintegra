@@ -8,12 +8,12 @@
               <input type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-            </div> 
-          </div>  
+            </div>
+          </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Modal Crear Usuario-->
   <div class="modal fade bd-example-modal-lg" id="modalCrearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -27,7 +27,7 @@
         </div>
         <!-- body -->
         <div class="modal-body">
-          <p class="text-center">Ingrese todos los campos para crear un nuevo usuario</p> 
+          <p class="text-center">Ingrese todos los campos para crear un nuevo usuario</p>
 
           <div class="col-md-10 offset-md-1">
             <form>
@@ -68,7 +68,7 @@
 
               <div class="form-group">
                 <label for="inputAddress2">Entidad contratante</label>
-              
+
                 <select class="custom-select" class="form-control" id="inputAddress2" [(ngModel)]="nuevoUsuarioEntidad" name="nuevoUsuarioEntidad">
                   <option value="">Entidad contratante</option>
                   <option value="Entidad 1">Entidad 1</option>
@@ -79,7 +79,7 @@
 
               <div class="form-group">
                 <label for="inputRol">Seleccione rol del usuario</label>
-              
+
                 <select class="custom-select" class="form-control" id="inputRol" [(ngModel)]="nuevoUsuarioRol" name="nuevoUsuarioRol">
                     <option value="">Seleccione rol del usuario</option>
                     <option value="Admin">Admin</option>
@@ -97,12 +97,12 @@
                   <input type="password" class="form-control" id="contrasena2" placeholder="Repetir contraseña" [(ngModel)]="nuevoUsuarioContrasena2" name="nuevoUsuarioContrasena2">
                 </div>
               </div>
-              
+
             </form>
           </div>
         </div>
         <!-- footer -->
-        
+
         <div class="col-md-10 offset-md-1 mb-1">
           <div class="modal-footer">
             <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -112,7 +112,7 @@
       </div>
     </div>
   </div>
-  <!--Modal Eliminar Usuario-->
+  <!--Modal Eliminar Usuario
   <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -134,7 +134,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
   <!--Modal Activar/desactivar Usuario
   <div class="modal fade" id="activeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -159,12 +159,12 @@
       </div>
     </div>
   </div>-->
-  
+
     <!-- table usuarios-->
   <div *ngIf="!listaUsuarios">
     <div class="text-center">
         Aún no hay usuarios creados
-    </div> 
+    </div>
   </div>
   <div *ngIf="listaUsuarios">
     <table class="table table-hover mt-4">
@@ -191,7 +191,7 @@
               <i class="fas fa-eye fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Ver usuario" (click)="verUsuario()"></i>
               <i *ngIf="usuario.AutentificacionUsuario.Activo == 1" class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="desactivarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
               <i *ngIf="usuario.AutentificacionUsuario.Activo == 0" class="far fa-times-circle fa-lg iconos_editar" style="color:red;" data-toggle="modal" data-placement="bottom" (click)="activarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
-              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" data-target="#deleteUser"  title="Eliminar usuario"></i>
+              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="deleteUser(usuario)" title="Eliminar usuario"></i>
             </td>
           </tr>
           </tbody>

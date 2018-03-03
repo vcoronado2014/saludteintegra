@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef  } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,4 +8,10 @@ import * as moment from 'moment';
 })
 export class AppComponent {
   title = 'app';
+  constructor(
+
+  ) {
+
+  }
+
 }
