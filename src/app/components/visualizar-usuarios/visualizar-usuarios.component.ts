@@ -269,6 +269,24 @@ export class VisualizarUsuariosComponent implements OnInit {
     );
 
   }
+  viewUser(usuario){
+    var html = '<h4 class="text-center" style="padding-bottom: 15px;">' +usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno + ' ' + usuario.Persona.ApellidoMaterno + ', Rol ' + usuario.Rol.Nombre + '</h4>' +
+    '<div class="container">'+
+    '<div class="row header-info"><div class="col-3 text-center">Nombre Usuario</div><div class="col-3 text-center">Run</div><div class="col-6 text-center">Correo Electrónico</div></div>' +
+    '<div class="row header-row"><div class="col-3 text-center">' + usuario.AutentificacionUsuario.NombreUsuario + '</div><div class="col-3 text-center">' + usuario.Persona.Run + '</div><div class="col-6 text-center">' + usuario.Persona.CorreoElectronico + '</div></div>' +
+    '<div class="row header-info"><div class="col-6 text-center">Teléfonos de Contacto</div><div class="col-6 text-center">Entidad Contratante</div></div>' +
+    '<div class="row header-row"><div class="col-6 text-center">' + usuario.Persona.TelefonoContactoUno + ' - ' + usuario.Persona.TelefonoContactoDos + '</div><div class="col-6 text-center">' + usuario.EntidadContratante.RazonSocial + '</div></div>' +
+    '</div>';
+
+    const dialogRef = this.modal.alert()
+        .size('lg')
+        .showClose(false)
+        .title('Info Usuario')
+        .keyboard(27)
+        .body(html)
+        .open();
+
+  }
   activarUsuario(usuario){
     console.log(usuario);
     let nombre = usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno;

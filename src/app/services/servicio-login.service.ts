@@ -59,7 +59,19 @@ export class ServicioLoginService{
         }
         else {
           this.loggedIn = false;
-          this.mensajeError = "Error de comunicación con el servidor";
+          if (data.Mensaje != null){
+              if (data.Mensaje.Codigo == "1"){
+                this.mensajeError = "Usuario no existe";
+              }
+              if (data.Mensaje.Codigo == "2"){
+                this.mensajeError = "Clave incorrecta";
+              }
+              if (data.Mensaje.Codigo == "5"){
+                this.mensajeError = "Usuario Inactivo o eliminado";
+              }
+          }
+          else
+            this.mensajeError = "Error de comunicación con el servidor";
         }
              
         return this.loggedIn;
