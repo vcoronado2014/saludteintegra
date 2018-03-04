@@ -35,6 +35,7 @@ import { ContratanteService } from './services/contratante.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     app_routing,
     HttpClientModule,
     HttpModule,

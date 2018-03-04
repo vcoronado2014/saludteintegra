@@ -103,6 +103,98 @@ export class VisualizarUsuariosComponent implements OnInit {
     console.log(this.forma.value);
     console.log(this.forma.status);
     console.log(this.forma.valid);
+    //validamos
+    if (this.forma.valid){
+      //construimos los elementos a guardar
+      var nombreUsuario = this.forma.value.nuevoUsuario;
+      var ecolId = this.forma.value.nuevoUsuarioEntidad.toString();
+      var rolId = this.forma.value.nuevoUsuarioRol.toString();
+      var nombres = this.forma.value.nuevoUsuarioNombre;
+      var apellidoPaterno = this.forma.value.nuevoUsuarioApellidoPat;
+      var apellidoMaterno = '';
+      if (this.forma.value.nuevoUsuarioApellidoMat != null){
+        apellidoMaterno = this.forma.value.nuevoUsuarioApellidoMat;
+      }
+      var correoElectronico = this.forma.value.nuevoUsuarioCorreo;
+      //en este caso es 0 ya que es un usuario nuevo
+      var ausId = 0;
+      var password = this.forma.value.nuevoUsuarioContrasena1;
+      var telefonoUno = '';
+      if (this.forma.value.nuevoUsuarioTelefono1 != null){
+        telefonoUno = this.forma.value.nuevoUsuarioTelefono1;
+      }
+      var telefonoDos = '';
+      if (this.forma.value.nuevoUsuarioTelefono2 != null){
+        telefonoDos = this.forma.value.nuevoUsuarioTelefono2;
+      }
+      var run = '';
+      if (this.forma.value.nuevoUsuarioRun != null){
+        run = this.forma.value.nuevoUsuarioRun;
+      }
+      var password2 = '';
+      if (this.forma.value.nuevoUsuarioContrasena2 != null){
+        password2 = this.forma.value.nuevoUsuarioContrasena2;
+      }
+      if (password == null || password == ''){
+        this.showToast('error', 'Password es requerida', 'Error');
+        return;
+      }
+      if (password2 == null || password2 == ''){
+        this.showToast('error', 'Repita Password es requerida', 'Error');
+        return;
+      }
+      if (password != password2){
+        this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
+        return;
+      }
+      //ahora tenemos todos los elementos listos, podemos enviar a guardar
+      this.usu.crearModificarUser(
+        nombreUsuario,
+        ecolId,
+        rolId,
+        nombres,
+        apellidoPaterno,
+        apellidoMaterno,
+        correoElectronico,
+        ausId,
+        password,
+        telefonoUno,
+        telefonoDos,
+        run
+      ).subscribe(
+        data => {
+          this.loading = true;
+          if (data){
+            var usuarioCambiado = data.json();
+
+            //este arreglo habria que recorrerlo con un ngfor
+            if (usuarioCambiado.Datos){
+              console.log(usuarioCambiado.Datos);
+              console.log(usuarioCambiado.Mensaje);
+              this.showToast('success', 'Usuarios creado con éxito', 'Nuevo');
+              //actualizamos la lista
+              this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
+              this.loading = false;
+            }
+            else{
+              //levantar un modal que hubo un error
+              console.log('error');
+              this.showToast('error', 'Error al crear usuario', 'Error');
+              this.loading = false;
+            }
+
+          }
+        },
+        err => {
+          this.showToast('error', err, 'Error');
+          console.error(err);
+          this.loading = false;
+          },
+        () => console.log('creado con exito')
+      );
+      
+
+    }
     
     
 

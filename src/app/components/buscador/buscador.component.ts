@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import * as moment from 'moment';
+import { ServicioLoginService } from '../../services/servicio-login.service';
 
 @Component({
   selector: 'app-buscador',
@@ -15,7 +16,10 @@ export class BuscadorComponent implements OnInit {
   nombreEntidadContratante:string;
   verMantenedorUsuario:boolean = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    public acceso: ServicioLoginService
+  ) {
 
   }
 
@@ -48,8 +52,17 @@ export class BuscadorComponent implements OnInit {
   abrirMantenedorUsuario(){
     this.verMantenedorUsuario = true;
   }
-  cerrarSesion(){
-   
+  //logout
+  logout(){
+    this.acceso.logout();
+    console.log('cerrar sesion');
+    this.router.navigate(['/login'])
+    .then(data => console.log(data),
+      error => {
+        console.log(error);
+        
+      }
+    )
   }
 
   
