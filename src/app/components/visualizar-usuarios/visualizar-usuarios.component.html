@@ -71,21 +71,24 @@
               </div>
 
               <div class="form-row">
-                <div class="form-group col-md-8">
+                <div class="form-group col-md-7">
                   <label for="inputAddress2">Entidad contratante*</label>
+                  <select class="custom-select" class="form-control" id="inputAddress2" formControlName="nuevoUsuarioEntidad">
+                    <option  *ngFor="let v of listaContratantes;" [value]="v.Id">{{v.RazonSocial}}</option>
+                  </select>
+                  <!--
                   <select class="custom-select" class="form-control" id="inputAddress2" formControlName="nuevoUsuarioEntidad">
                     <option value="">Entidad contratante</option>
                     <option value="Entidad 1">Entidad 1</option>
                     <option value="Entidad 2">Entidad 2</option>
                     <option value="Entidad 3">Entidad 3</option>
                   </select>
+                  -->
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                   <label for="inputRol">Rol del usuario*</label>
                   <select class="custom-select" class="form-control" id="inputRol" formControlName="nuevoUsuarioRol">
-                    <option value="">Seleccione rol del usuario</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Usuario">Usuario</option>
+                    <option  *ngFor="let r of listaRoles;" [value]="r.Id">{{r.Nombre}}</option>
                   </select>
                 </div>
               </div>
@@ -133,33 +136,38 @@
   <div *ngIf="!listaUsuarios">
     <div class="text-center">
         Aún no hay usuarios creados
-    </div> 
+    </div>
   </div>
   <div *ngIf="listaUsuarios">
-  <table class="table table-hover mt-4">
-      
-        <thead>
-          <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Nombre Completo</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let usuario of listaUsuarios">
-            <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
+    <table class="table table-hover mt-4">
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Nombre Completo</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of listaUsuarios">
+          <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
             <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
             <td>{{usuario.Persona.CorreoElectronico}}</td>
             <td>{{usuario.Rol.Nombre}}</td>
             <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
             <td *ngIf="usuario.AutentificacionUsuario.Activo == 0">Inactivo</td>
-            <td><i class="fas fa-edit fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Editar usuario"></i><i class="fas fa-eye fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Ver usuario"></i><i class="far fa-check-circle fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Desactivar/Activar usuario"></i><i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario"></i></td>
+            <td>
+              <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" title="Editar usuario" (click)="editarUsuario()"></i>
+              <i class="fas fa-eye fa-lg iconos_editar"  data-toggle="modal" data-placement="bottom" title="Ver usuario" (click)="viewUser(usuario)"></i>
+              <i *ngIf="usuario.AutentificacionUsuario.Activo == 1" class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="desactivarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
+              <i *ngIf="usuario.AutentificacionUsuario.Activo == 0" class="far fa-times-circle fa-lg iconos_editar" style="color:red;" data-toggle="modal" data-placement="bottom" (click)="activarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
+              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="deleteUser(usuario)" title="Eliminar usuario"></i>
+            </td>
           </tr>
-        </tbody>
-  </table>
+          </tbody>
+    </table>
 </div>
 </div>
 

@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+/* nuevos */
+.header-info {   
+    background: #24A69C !important;
+    color: white;
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.header-row{   
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    font-weight: bold;
+}
+.header-header  {
+    border-bottom: none;
+    background-color: #24A69C !important;
+    color: #fff;
+}

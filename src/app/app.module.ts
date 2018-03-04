@@ -4,7 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { LoadingModule } from 'ngx-loading';
-
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule } from '../../node_modules/ngx-modialog/plugins/bootstrap';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Rutas
 import { app_routing } from './app.routes';
 
@@ -37,7 +40,10 @@ import { ContratanteService } from './services/contratante.service';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    LoadingModule
+    LoadingModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    ToastModule.forRoot()
   ],
   providers: [
     ServicioLoginService,
