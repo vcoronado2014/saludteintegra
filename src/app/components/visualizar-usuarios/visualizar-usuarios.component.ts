@@ -178,8 +178,20 @@ export class VisualizarUsuariosComponent implements OnInit {
             }
             else{
               //levantar un modal que hubo un error
-              console.log('error');
-              this.showToast('error', 'Error al crear usuario', 'Error');
+              if (usuarioCambiado.Mensaje){
+                if (usuarioCambiado.Mensaje.Codigo == '7'){
+                  console.log('error');
+                  this.showToast('error', 'Nombre de usuario ya existe', 'Error');  
+                }
+                else{
+                  console.log('error');
+                  this.showToast('error', usuarioCambiado.Mensaje.Texto, 'Error');  
+                }
+              }
+              else{
+                console.log('error');
+                this.showToast('error', 'Error al crear usuario', 'Error');
+              }
               this.loading = false;
             }
 
@@ -202,10 +214,13 @@ export class VisualizarUsuariosComponent implements OnInit {
 
     );*/
   }
-
+  refresh(){
+    this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
+  }
   
   obtenerListaUsuarios(ecolId, rolId){
     //indicador valor
+    this.loading = true;
     this.usu.postUsers(ecolId, rolId).subscribe(
         data => {
           if (data){
@@ -215,10 +230,12 @@ export class VisualizarUsuariosComponent implements OnInit {
             if (lista.Datos) {
               this.listaUsuarios = lista.Datos;
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
+              this.loading = false;
             }
             else{
               //levantar un modal que hubo un error
               this.showToast('error', 'Error al recuperar usuarios', 'Usuarios');
+              this.loading = false;
             }
 
           }
