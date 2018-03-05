@@ -83,3 +83,24 @@ button:active {
   border-color: #de770f;
   color: #FFFFFF;
 }
+.forgotPass{
+  text-decoration-line: underline;
+  color:#fff;
+  font-size: 0.9em;
+  opacity: 0.4;
+  margin-top: 10%;
+  margin-bottom: -11%;
+  cursor: pointer;
+}
+.modal-header{
+  border-bottom: none;
+  background-color: #24A69C !important;
+  color: #fff;
+}
+.modal-title{
+  margin: 0 auto;
+  font-size: 2rem;
+}
+button.close.cerrar_modal{
+  margin-left: -20px;
+}

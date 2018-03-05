@@ -1,3 +1,50 @@
+<!-- Modal Recuperar contraseña -->
+<div class="modal fade" id="recuperarPass" tabindex="-1" role="dialog" aria-labelledby="recuperarPassTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Recuperar contraseña</h5>
+				<button type="button" class="close cerrar_modal" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<h5>Ingresa tu nombre de usuario.</h5>
+						</div>
+					</div>
+					<br>	
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group mb-4">
+								<input [(ngModel)]="loginRecuperar" type="text" (keyup.enter)="checkUser()" class="form-control">
+								<div class="input-group-append">
+									<button (click)="checkUser()" title="Verificar nombre de usuario"><i class="fas {{iconAccion}}"></i></button>
+								</div>
+							</div>							
+						</div>
+					</div>
+					<br>
+					<div class="row" *ngIf="msjReset">
+						<div class="col-md-12 text-center">
+							<p>{{msjReset}}</p>
+						</div>
+					</div>
+					<br>
+					<div class="row" *ngIf="emailUser">
+							<div class="col-md-12">
+								<p>Pulsa el boton Enviar para recibir un correo solicitando el cambio de contraseña</p>
+								<p>Correo ingresado:  {{emailUser}}</p>
+								<button class="text-center" (click)="recuperarPass()">Enviar</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container-fluid caja" >
 	<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 	<div class="login-box">
@@ -6,6 +53,7 @@
 			<input required class="main-form" (keyup.enter)="Inicio()" type="text" name="loginUsuario" [(ngModel)]="loginUsuario" placeholder="Usuario">
 			<input required class="main-form" (keyup.enter)="Inicio()" type="password"  name="loginPassword" [(ngModel)]="loginPassword" placeholder="Contraseña">
 			<button class="btn btn-block"(click)="Inicio()" >Iniciar Sesión</button>
+			<p class="forgotPass" data-toggle="modal" data-target="#recuperarPass">Olvidé mi contraseña</p>
 	  </section>
 	</div>
 	<div *ngIf="errorLog">
