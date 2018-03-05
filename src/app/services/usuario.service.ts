@@ -92,11 +92,44 @@ export class UsuarioService {
   }
   getUserId(ausId){
 
-    let url = appSettings.API_ENDPOINT + 'Usuario?id=' + ausId.toString();
+    let url = appSettings.API_ENDPOINT + 'Usuario?id=' + ausId;
 
     let data = this.http.get(url);
     return data;
 
   }
+  //este Retorna un usuario compuesto
+  
+  getUserName(nombreUsuario){
+    
+        let url = appSettings.API_ENDPOINT + 'Usuario?nombreUsuario=' + nombreUsuario;
+    
+        let data = this.http.get(url);
+        return data;
+    
+      }
+//este retorna en la data un True o False      
+getCambiarClave(email, nombreUsuario, password){
+  
+      let url = appSettings.API_ENDPOINT + 'Clave?email=' + email + '&nombreUsuario=' + nombreUsuario + '&password=' + password;
+  
+      let data = this.http.get(url);
+      return data;
+  
+    }
+//este retorna en la Data un True o False
+    postRecuperarClave(email, nombreUsuario, password){
+      let url = appSettings.API_ENDPOINT + 'Clave';
+      let dataGet = {
+         Email: email,
+         NombreUsuario: nombreUsuario,
+         Password: password
+        };
+  
+      let data = this.http.post(url, dataGet, {
+        headers: new Headers({'Content-Type': 'application/json'})
+      });
+      return data;
+    }    
 
 }
