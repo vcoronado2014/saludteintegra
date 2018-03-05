@@ -29,6 +29,7 @@ export class VisualizarUsuariosComponent implements OnInit {
   //usuario logueado
   loading = false;
   usuario: any;
+  tipoDeAccion:string;
 
   //formulario
   forma:FormGroup;
@@ -76,8 +77,8 @@ export class VisualizarUsuariosComponent implements OnInit {
         'nuevoUsuarioTelefono2': new FormControl(),
         'nuevoUsuarioEntidad': new FormControl('', Validators.required),
         'nuevoUsuarioRol': new FormControl('', Validators.required),
-        'nuevoUsuarioContrasena1': new FormControl(),
-        'nuevoUsuarioContrasena2': new FormControl()
+        'nuevoUsuarioContrasena1': new FormControl('', Validators.required),
+        'nuevoUsuarioContrasena2': new FormControl('', Validators.required)
       })
     }
 
@@ -92,14 +93,8 @@ export class VisualizarUsuariosComponent implements OnInit {
     }
   }
 
-  onSubmitTemplateBased(){
-    console.log("click");
-  }
-
   guardarUsuario(){
-    //console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidoPat +
-               // this.nuevoUsuarioCorreo + this.nuevoUsuarioTelefono1 + this.nuevoUsuarioTelefono2 + this.nuevoUsuarioEntidad +
-                //this.nuevoUsuarioRol + this.nuevoUsuarioContrasena1 + this.nuevoUsuarioContrasena2);
+    
     console.log(this.forma.value);
     console.log(this.forma.status);
     console.log(this.forma.valid);
@@ -171,10 +166,11 @@ export class VisualizarUsuariosComponent implements OnInit {
             if (usuarioCambiado.Datos){
               console.log(usuarioCambiado.Datos);
               console.log(usuarioCambiado.Mensaje);
-              this.showToast('success', 'Usuarios creado con éxito', 'Nuevo');
+              this.showToast('success', 'Usuario creado con éxito', 'Nuevo');
               //actualizamos la lista
               this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
               this.loading = false;
+              //Aca deberíamos limpiar los campos
             }
             else{
               //levantar un modal que hubo un error
@@ -394,7 +390,7 @@ export class VisualizarUsuariosComponent implements OnInit {
                 if (usuarioCambiado.Datos){
                   console.log(usuarioCambiado.Datos);
                   console.log(usuarioCambiado.Mensaje);
-                  this.showToast('success', 'Usuarios desactivado con éxito', 'Usuarios');
+                  this.showToast('success', 'Usuario desactivado con éxito', 'Usuarios');
                   //actualizamos la lista
                   this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
                 }
@@ -418,7 +414,7 @@ export class VisualizarUsuariosComponent implements OnInit {
 
   }
   viewUser(usuario){
-    var html = '<h4 class="text-center" style="padding-bottom: 15px;">' +usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno + ' ' + usuario.Persona.ApellidoMaterno + ', Rol ' + usuario.Rol.Nombre + '</h4>' +
+    var html = '<h4 class="text-center" style="padding-bottom: 15px;">' +usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno + ' ' + usuario.Persona.ApellidoMaterno + '<br>Rol: ' + usuario.Rol.Nombre + '</h4>' +
     '<div class="container">'+
     '<div class="row header-info"><div class="col-3 text-center">Nombre Usuario</div><div class="col-3 text-center">Run</div><div class="col-6 text-center">Correo Electrónico</div></div>' +
     '<div class="row header-row"><div class="col-3 text-center">' + usuario.AutentificacionUsuario.NombreUsuario + '</div><div class="col-3 text-center">' + usuario.Persona.Run + '</div><div class="col-6 text-center">' + usuario.Persona.CorreoElectronico + '</div></div>' +
@@ -433,7 +429,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         .keyboard(27)
         .body(html)
         .open();
-
+console.log(usuario);
   }
   activarUsuario(usuario){
     console.log(usuario);
@@ -485,10 +481,14 @@ export class VisualizarUsuariosComponent implements OnInit {
     );
 
   }
-  verUsuario(){
-    //ver usuario
+ 
+  modalCrearUsuario(){
+    this.tipoDeAccion = 'Crear';
   }
-  editarUsuario(){
+  editarUsuario(usuario){
     //editar usuario
+    console.log(usuario);
+    this.tipoDeAccion = 'Editar';
+    this.forma.setValue( usuario );
   }
 }
