@@ -8,6 +8,10 @@ import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from '../../node_modules/ngx-modialog/plugins/bootstrap';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//Pipes
+import { encriptadoPipe } from './pipes/encriptado.pipe';
+
 //Rutas
 import { app_routing } from './app.routes';
 
@@ -31,7 +35,8 @@ import { ContratanteService } from './services/contratante.service';
     LoginComponent,
     BuscadorComponent,
     EspacioVisorComponent,
-    VisualizarUsuariosComponent
+    VisualizarUsuariosComponent,
+    encriptadoPipe
   ],
   imports: [
     BrowserModule,

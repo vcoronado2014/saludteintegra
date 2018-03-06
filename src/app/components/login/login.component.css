@@ -63,23 +63,17 @@ button:active {
   box-shadow:inset 0px 2px 1px rgba(0, 0, 0, 0.3);
 }
 .errorBox{
-  border-style: solid;
-  border-width: 1px;
-  display: block;
-  font-size: 1.1rem;
-  font-weight: normal;
-  margin-bottom: 1.25rem;
-  margin-top: 2rem;
-  margin-left: 504px;
-  margin-right:504px;
-  padding: 1.875rem 1.5rem 0.875rem 0.875rem;
-  position: relative;
-  transition: opacity 300ms ease-out;
-  line-height: 2.5;
-  width: 358px;
+  display: -webkit-inline-box;
+  width: 422px;
+  background: #F08A23;
+  padding: 20px;
+  border: 1px solid #FFFFFF;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
 }
 .warning{
-  background-color: #f08a24;
+  background-color: #F08A23;
   border-color: #de770f;
   color: #FFFFFF;
 }
@@ -103,4 +97,9 @@ button:active {
 }
 button.close.cerrar_modal{
   margin-left: -20px;
+}
+.errorText{
+  position: relative;
+  color:#fff;
+  padding-left: 35%;
 }

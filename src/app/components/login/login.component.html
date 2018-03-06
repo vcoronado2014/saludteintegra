@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Recuperar contraseña</h5>
-				<button type="button" class="close cerrar_modal" style="background-color:transparent;" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close cerrar_modal" style="background-color:transparent;" (click)="clearData()" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -19,7 +19,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="input-group mb-4">
-								<input [(ngModel)]="loginRecuperar" type="text" (keyup.enter)="checkUser()" class="form-control">
+								<input [(ngModel)]="loginRecuperar" onfocus="this.value=''" type="text" (keyup.enter)="checkUser()" class="form-control">
 								<div class="input-group-append">
 									<button (click)="checkUser()" title="Verificar nombre de usuario"><i class="fas {{iconAccion}}"></i></button>
 								</div>
@@ -34,34 +34,36 @@
 					</div>
 					<br>
 					<div class="row" *ngIf="emailUser">
-							<div class="col-md-12">
-								<p>Pulsa el boton Enviar para recibir un correo solicitando el cambio de contraseña</p>
-								<p>Correo ingresado:  {{emailUser}}</p>
-								<button class="text-center" (click)="recuperarPass()">Enviar</button>
-							</div>
+						<div class="col-md-12">
+							<p>Pulsa el boton Enviar para recibir un correo solicitando el cambio de contraseña</p>
+							<p>Correo ingresado:  {{ emailUser | encriptado }}</p>
+							<button class="text-center" (click)="recuperarPass()">Enviar</button>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="container-fluid caja" >
-	<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<!-- Login -->
+<div class="container-fluid caja">
+	<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '12px' }"></ngx-loading>
 	<div class="login-box">
-	  <h1>Accesos</h1>
-	  <section class="ingreso">
-			<input required class="main-form" (keyup.enter)="Inicio()" type="text" name="loginUsuario" [(ngModel)]="loginUsuario" placeholder="Usuario">
-			<input required class="main-form" (keyup.enter)="Inicio()" type="password"  name="loginPassword" [(ngModel)]="loginPassword" placeholder="Contraseña">
+		<h1>Accesos</h1>
+	  	<section class="ingreso">
+			<input required class="main-form" (keyup.enter)="Inicio()" onfocus="this.value=''" type="text" name="loginUsuario" [(ngModel)]="loginUsuario" placeholder="Usuario">
+			<input required class="main-form" (keyup.enter)="Inicio()" onfocus="this.value=''" type="password"  name="loginPassword" [(ngModel)]="loginPassword" placeholder="Contraseña">
 			<button class="btn btn-block"(click)="Inicio()" >Iniciar Sesión</button>
 			<p class="forgotPass" data-toggle="modal" data-target="#recuperarPass">Olvidé mi contraseña</p>
-	  </section>
+		</section>
 	</div>
-	<div *ngIf="errorLog">
-		<div class="row text-center">
-				<div class="text-center errorBox warning">
-				<p>{{errorLog}}</p>
-			</div>
+	<br>
+	<div class="row " *ngIf="errorLog">
+		<div class=" col-md-12 text-center">
+			<div class="errorBox">
 
+				<p class="errorText text-center">{{errorLog}}</p>
+			</div>
 		</div>
 	</div>
 </div>

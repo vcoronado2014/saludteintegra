@@ -45,13 +45,13 @@ export class LoginComponent {
   Inicio(){
     
     if (!this.loginUsuario ){
-      return this.errorLog = "Nombre de usuario requerido";
+      return this.showToast('error','Nombre de usuario requerido','Error');
     }
     if(!this.loginPassword){
         
-      return this.errorLog = "Contraseña requerida";
+      return this.showToast('error','Contraseña requerida','Error');
     }
-
+    
     this.loading = true;
     this.auth.login(this.loginUsuario,this.loginPassword).subscribe(
       rs => { 
@@ -61,7 +61,7 @@ export class LoginComponent {
       er => {
         this.loading = false;
         console.log('incorrecto' + er);
-        this.errorLog = this.auth.mensajeError;
+        this.showToast('error',this.auth.mensajeError,'Error'); 
       },
       () => {
         if (this.isLogged){
@@ -78,21 +78,18 @@ export class LoginComponent {
         else {
           //incorrecto
           console.log('incorrecto');
-          this.errorLog = this.auth.mensajeError;
+          this.showToast('error',this.auth.mensajeError,'Error');
         }
       }
     );
-  
+ 
   }
 
   checkUser(loginRecuperar){
-    this.iconAccion = "fa-spinner fa-spin"
-
+ 
     if(!this.loginRecuperar){
-      this.iconAccion = "fas fa-times"
       this.msjReset= "Usuario incorrecto, inténtalo nuevamente. Si no recuerdas tu nombre de usuario por favor contacta al Administrador."
-    }
-    this.iconAccion = "fa-spinner fa-spin"
+      }  
     if(this.loginRecuperar){
       //realizamos la llamada a la api
       this.loading = true;
@@ -105,19 +102,17 @@ export class LoginComponent {
                 if (usuarioO.Mensaje.Codigo == "0"){
                   this.emailUser = usuarioO.Datos.Persona.CorreoElectronico;
                   this.iconAccion = "fas fa-check"
+                  this.msjReset="";
                 }
                 else {
-                  //el codigo es distinto de cero, hay que mostrar error
+                  this.msjReset="Usuario incorrecto";
                 }
-                
-                //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
                 this.loading = false;
               }
               else{            
                  //hay que mostrar un error, en este caso no hay datos
                 this.showToast('error','','Usuario no encontrado');
                 this.loading = false;
-                this.iconAccion = "fas fa-times"
                 this.msjReset= "Usuario incorrecto, inténtalo nuevamente. Si no recuerdas tu nombre de usuario por favor contacta al Administrador."
               }
   
@@ -127,6 +122,7 @@ export class LoginComponent {
           () => console.log('get info usuario')
         );
     }
+    
   }
   showToast(tipo, mensaje, titulo){
     if (tipo == 'success'){
@@ -145,11 +141,14 @@ export class LoginComponent {
   }
 
   recuperarPass(){
-    //hacer el envio a la api
+
 
   }
-
-
-
+  clearData(){
+    this.loginRecuperar = "";
+    this.msjReset="";
+    this.emailUser="";
+    this.iconAccion = "fa-search";
+  }
 
 }
