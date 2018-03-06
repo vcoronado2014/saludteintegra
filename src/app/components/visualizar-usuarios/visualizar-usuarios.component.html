@@ -26,7 +26,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <!-- body-->
+        <!-- body  -->
         <div class="modal-body">
 
           <div class="col-md-12 ">
@@ -85,14 +85,16 @@
                   </select>
                 </div>
               </div>
-
+              <div class="text-center alert-success p-1" *ngIf="tipoDeAccion == 'Editar'">
+                Si no desea cambiar la contraseña del usuario deje estos campos vacios.
+              </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="contrasena1">Contraseña*</label>
+                  <label for="contrasena1">Contraseña<span *ngIf="tipoDeAccion == 'Crear'">*</span></label> 
                   <input type="password" class="form-control" id="contrasena1" placeholder="Contraseña" formControlName="nuevoUsuarioContrasena1">
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="contrasena2">Repita la contraseña*</label>
+                  <label for="contrasena2">Repita la contraseña<span *ngIf="tipoDeAccion == 'Crear'">*</span></label>
                   <input type="password" class="form-control" id="contrasena2" placeholder="Repetir contraseña" formControlName="nuevoUsuarioContrasena2">
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef  } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AUTO_STYLE  } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
@@ -12,8 +12,8 @@ import {$NBSP} from "@angular/compiler/src/chars";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
 
-
 bootstrap4Mode();
+declare var jQuery:any;
 
 @Component({
   selector: 'app-visualizar-usuarios',
@@ -30,23 +30,11 @@ export class VisualizarUsuariosComponent implements OnInit {
   loading = false;
   usuario: any;
   tipoDeAccion:string;
+  //usuario editado
+  ausIdUsuarioEditado;
 
   //formulario
   forma:FormGroup;
-
-  //parametros para funcion de crearModificarUser()
-  /*nombreUsuario,
-  ecolId,
-  rolId,
-  nombres,
-  primerApellido,
-  segundoApellido,
-  correoElectronico,
-  ausId,
-  password,
-  telefonoContactoUno,
-  telefonoContactoDos,
-  run */
 
   constructor(
     private usu:UsuarioService,
@@ -73,12 +61,14 @@ export class VisualizarUsuariosComponent implements OnInit {
         'nuevoUsuarioRun': new FormControl(),
         'nuevoUsuarioCorreo': new FormControl('', [Validators.required,
                                                    Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
-        'nuevoUsuarioTelefono1': new FormControl(),
-        'nuevoUsuarioTelefono2': new FormControl(),
+        'nuevoUsuarioTelefono1': new FormControl('', [Validators.minLength(9),
+                                                      Validators.maxLength(9)]),
+        'nuevoUsuarioTelefono2': new FormControl('', [Validators.minLength(9),
+                                                      Validators.maxLength(9)]),
         'nuevoUsuarioEntidad': new FormControl('', Validators.required),
         'nuevoUsuarioRol': new FormControl('', Validators.required),
-        'nuevoUsuarioContrasena1': new FormControl('', Validators.required),
-        'nuevoUsuarioContrasena2': new FormControl('', Validators.required)
+        'nuevoUsuarioContrasena1': new FormControl(),
+        'nuevoUsuarioContrasena2': new FormControl()
       })
     }
 
@@ -93,7 +83,7 @@ export class VisualizarUsuariosComponent implements OnInit {
     }
   }
 
-  guardarUsuario(){
+  guardarUsuario(usuario){
     
     console.log(this.forma.value);
     console.log(this.forma.status);
@@ -112,8 +102,10 @@ export class VisualizarUsuariosComponent implements OnInit {
       }
       var correoElectronico = this.forma.value.nuevoUsuarioCorreo;
       //en este caso es 0 ya que es un usuario nuevo
-      var ausId = 0;
-      var password = this.forma.value.nuevoUsuarioContrasena1;
+      var ausId;
+      if(this.tipoDeAccion == 'Editar'){
+        ausId = this.ausIdUsuarioEditado;
+      }
       var telefonoUno = '';
       if (this.forma.value.nuevoUsuarioTelefono1 != null){
         telefonoUno = this.forma.value.nuevoUsuarioTelefono1;
@@ -126,22 +118,31 @@ export class VisualizarUsuariosComponent implements OnInit {
       if (this.forma.value.nuevoUsuarioRun != null){
         run = this.forma.value.nuevoUsuarioRun;
       }
+      var password = '';
       var password2 = '';
-      if (this.forma.value.nuevoUsuarioContrasena2 != null){
-        password2 = this.forma.value.nuevoUsuarioContrasena2;
+
+      if(this.tipoDeAccion == 'Crear'){
+        ausId = 0;
+        if (this.forma.value.nuevoUsuarioContrasena1 != null){
+          password = this.forma.value.nuevoUsuarioContrasena1;
+        }
+        if (this.forma.value.nuevoUsuarioContrasena1 != null){
+          password2 = this.forma.value.nuevoUsuarioContrasena2;
+        }
+        if (password == null || password == ''){
+          this.showToast('error', 'Password es requerida', 'Error');
+          return;
+        }
+        if (password2 == null || password2 == ''){
+          this.showToast('error', 'Repita Password es requerida', 'Error');
+          return;
+        }
+        if (password != password2){
+          this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
+          return;
+        }
       }
-      if (password == null || password == ''){
-        this.showToast('error', 'Password es requerida', 'Error');
-        return;
-      }
-      if (password2 == null || password2 == ''){
-        this.showToast('error', 'Repita Password es requerida', 'Error');
-        return;
-      }
-      if (password != password2){
-        this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
-        return;
-      }
+     
       //ahora tenemos todos los elementos listos, podemos enviar a guardar
       this.usu.crearModificarUser(
         nombreUsuario,
@@ -166,11 +167,24 @@ export class VisualizarUsuariosComponent implements OnInit {
             if (usuarioCambiado.Datos){
               console.log(usuarioCambiado.Datos);
               console.log(usuarioCambiado.Mensaje);
-              this.showToast('success', 'Usuario creado con éxito', 'Nuevo');
+              if(this.tipoDeAccion == 'Crear'){
+                this.showToast('success', 'Usuario creado con éxito', 'Nuevo');
+              }
+              if(this.tipoDeAccion == 'Editar'){
+                this.showToast('success', 'Usuario editado con éxito', 'Edición');
+              }
               //actualizamos la lista
               this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
               this.loading = false;
-              //Aca deberíamos limpiar los campos
+              //Aca limpiamos los campos
+              if(this.tipoDeAccion == 'Crear'){
+                this.forma.reset({});
+              }
+              if(this.tipoDeAccion == 'Editar'){
+                //cerrar modal
+                jQuery("#modalCrearUsuario").modal("hide");
+              }
+              
             }
             else{
               //levantar un modal que hubo un error
@@ -227,6 +241,7 @@ export class VisualizarUsuariosComponent implements OnInit {
               this.listaUsuarios = lista.Datos;
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
               this.loading = false;
+              console.log(this.listaUsuarios);
             }
             else{
               //levantar un modal que hubo un error
@@ -341,7 +356,7 @@ export class VisualizarUsuariosComponent implements OnInit {
                   if (usuarioCambiado.Datos){
                     console.log(usuarioCambiado.Datos);
                     console.log(usuarioCambiado.Mensaje);
-                    this.showToast('success', 'Usuarios eliminado con éxito', 'Activado');
+                    this.showToast('success', 'Usuario eliminado con éxito', 'Activado');
                     //actualizamos la lista
                     this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
                   }
@@ -484,11 +499,30 @@ console.log(usuario);
  
   modalCrearUsuario(){
     this.tipoDeAccion = 'Crear';
+    this.forma.reset({});
   }
+
   editarUsuario(usuario){
     //editar usuario
     console.log(usuario);
     this.tipoDeAccion = 'Editar';
-    this.forma.setValue( usuario );
+    this.ausIdUsuarioEditado =  usuario.Persona.AusId;
+    console.log(this.ausIdUsuarioEditado);
+    this.forma.setValue( {
+      nuevoUsuarioNombre: usuario.Persona.Nombres,
+      nuevoUsuarioApellidoPat: usuario.Persona.ApellidoPaterno,
+      nuevoUsuarioApellidoMat: usuario.Persona.ApellidoMaterno,
+      nuevoUsuario: usuario.AutentificacionUsuario.NombreUsuario,
+      nuevoUsuarioRun: usuario.Persona.Run,
+      nuevoUsuarioCorreo: usuario.Persona.CorreoElectronico,
+      nuevoUsuarioTelefono1: usuario.Persona.TelefonoContactoUno,
+      nuevoUsuarioTelefono2: usuario.Persona.TelefonoContactoDos,
+      nuevoUsuarioEntidad: usuario.EntidadContratante.Id,
+      nuevoUsuarioRol: usuario.Rol.Id,
+      nuevoUsuarioContrasena1: '',
+      nuevoUsuarioContrasena2: ''
+    } );
+    
   }
+
 }
