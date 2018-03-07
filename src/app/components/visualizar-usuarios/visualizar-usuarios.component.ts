@@ -144,6 +144,7 @@ export class VisualizarUsuariosComponent implements OnInit {
       }
      
       //ahora tenemos todos los elementos listos, podemos enviar a guardar
+      this.loading = true;
       this.usu.crearModificarUser(
         nombreUsuario,
         ecolId,
@@ -159,7 +160,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         run
       ).subscribe(
         data => {
-          this.loading = true;
+          
           if (data){
             var usuarioCambiado = data.json();
 
@@ -214,16 +215,10 @@ export class VisualizarUsuariosComponent implements OnInit {
           },
         () => console.log('creado con exito')
       );
-      
-
     }
-    
-    
-
-    /*this.usu.crearModificarUser().subscribe(
-
-    );*/
   }
+
+
   refresh(){
     this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
   }
@@ -246,9 +241,8 @@ export class VisualizarUsuariosComponent implements OnInit {
             else{
               //levantar un modal que hubo un error
               this.showToast('error', 'Error al recuperar usuarios', 'Usuarios');
-              this.loading = false;
             }
-
+            this.loading = false;
           }
         },
         err => console.error(err),

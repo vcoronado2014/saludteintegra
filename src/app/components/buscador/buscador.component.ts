@@ -48,6 +48,7 @@ export class BuscadorComponent implements OnInit {
       )
     }
   }
+
   buscarRun(){
     this.verMantenedorUsuario = false;
     this.verVisor = true;
@@ -56,6 +57,12 @@ export class BuscadorComponent implements OnInit {
   abrirMantenedorUsuario(){
     this.verMantenedorUsuario = true;
   }
+
+  verConfigUsuario(){
+    this.verMantenedorUsuario = false;
+    this.verVisor = false;
+  }
+
   //logout
   logout(){
     this.acceso.logout();
