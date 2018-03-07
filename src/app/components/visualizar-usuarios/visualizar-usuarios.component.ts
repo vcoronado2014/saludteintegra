@@ -36,6 +36,9 @@ export class VisualizarUsuariosComponent implements OnInit {
   //formulario
   forma:FormGroup;
 
+  //busqueda de usuario
+  termino:string;
+
   constructor(
     private usu:UsuarioService,
     private rol:RolService,
