@@ -15,7 +15,7 @@
       </span>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" (click)="verConfigUsuario()"><i class="fas fa-cog"></i> {{nombreCompleto}}</a>
-        <a class="dropdown-item sin_hover">{{nombreEntidadContratante}}</a>
+        <a class="dropdown-item sin_hover"><i class="far fa-hospital"></i> {{nombreEntidadContratante}}</a>
         <a *ngIf="rolUsuario != 'Usuario Establecimiento'" class="dropdown-item" (click)="abrirMantenedorUsuario()"><i class="fas fa-user-plus"></i> Mantenedor de usuario</a>
         <a class="dropdown-item" (click)="logout()"><i class="far fa-times-circle"></i> Cerrar sesión</a>
       </div>
