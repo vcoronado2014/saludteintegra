@@ -239,7 +239,7 @@ export class VisualizarUsuariosComponent implements OnInit {
               this.listaUsuarios = lista.Datos;
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
               this.loading = false;
-              console.log(this.listaUsuarios);
+              console.log(this.listaUsuarios.length);
             }
             else{
               //levantar un modal que hubo un error

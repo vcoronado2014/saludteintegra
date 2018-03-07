@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from '../../node_modules/ngx-modialog/plugins/bootstrap';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng2Rut, RutValidator } from 'ng2-rut';
 
 //Pipes
 import { encriptadoPipe } from './pipes/encriptado.pipe';
@@ -49,7 +50,8 @@ import { ContratanteService } from './services/contratante.service';
     LoadingModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
+    Ng2Rut
   ],
   providers: [
     ServicioLoginService,

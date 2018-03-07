@@ -125,11 +125,6 @@
   </div>
 
   <!-- table usuarios-->
-  <div *ngIf="!listaUsuarios">
-    <div class="text-center">
-        Aún no hay usuarios creados
-    </div>
-  </div>
   <div *ngIf="listaUsuarios">
     <table class="table table-hover mt-4">
       <thead>
@@ -142,24 +137,31 @@
           <th scope="col">Opciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="listaUsuarios.length != 0">
         <tr *ngFor="let usuario of listaUsuarios">
           <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
-            <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
-            <td>{{usuario.Persona.CorreoElectronico}}</td>
-            <td>{{usuario.Rol.Nombre}}</td>
-            <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
-            <td *ngIf="usuario.AutentificacionUsuario.Activo == 0">Inactivo</td>
-            <td>
-              <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-target="#modalCrearUsuario" data-placement="bottom" title="Editar usuario" (click)="editarUsuario(usuario)"></i>
-              <i class="fas fa-eye fa-lg iconos_editar"  data-toggle="modal" data-placement="bottom" title="Ver usuario" (click)="viewUser(usuario)"></i>
-              <i *ngIf="usuario.AutentificacionUsuario.Activo == 1" class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="desactivarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
-              <i *ngIf="usuario.AutentificacionUsuario.Activo == 0" class="far fa-times-circle fa-lg iconos_editar" style="color:red;" data-toggle="modal" data-placement="bottom" (click)="activarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
-              <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="deleteUser(usuario)" title="Eliminar usuario"></i>
-            </td>
-          </tr>
-          </tbody>
+          <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
+          <td>{{usuario.Persona.CorreoElectronico}}</td>
+          <td>{{usuario.Rol.Nombre}}</td>
+          <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
+          <td *ngIf="usuario.AutentificacionUsuario.Activo == 0">Inactivo</td>
+          <td>
+            <i class="fas fa-edit fa-lg iconos_editar" data-toggle="modal" data-target="#modalCrearUsuario" data-placement="bottom" title="Editar usuario" (click)="editarUsuario(usuario)"></i>
+            <i class="fas fa-eye fa-lg iconos_editar"  data-toggle="modal" data-placement="bottom" title="Ver usuario" (click)="viewUser(usuario)"></i>
+            <i *ngIf="usuario.AutentificacionUsuario.Activo == 1" class="far fa-check-circle fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="desactivarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
+            <i *ngIf="usuario.AutentificacionUsuario.Activo == 0" class="far fa-times-circle fa-lg iconos_editar" style="color:red;" data-toggle="modal" data-placement="bottom" (click)="activarUsuario(usuario)" title="Desactivar/Activar usuario"></i>
+            <i class="far fa-trash-alt fa-lg iconos_editar" data-toggle="modal" data-placement="bottom" (click)="deleteUser(usuario)" title="Eliminar usuario"></i>
+          </td>
+        </tr>
+      </tbody>
+       
     </table>
+    <!-- Mensaje si el arreglo de la lista de usuarios está vacia -->
+    <div *ngIf="listaUsuarios.length == 0" class="text-center mt-5">
+        <p>Aún no hay usuarios creados.</p> 
+        <p>Para crear usuarios nuevos, presione el botón superior izquierdo</p>
+        <p><i class="fas fa-user-plus"></i> <strong>Crear Usuario</strong></p>
+      </div> 
 </div>
 </div>
 
