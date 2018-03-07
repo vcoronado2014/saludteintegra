@@ -11,7 +11,7 @@ import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
-
+declare var jQuery:any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -133,6 +133,7 @@ export class LoginComponent {
           var result = data.json(); 
           if(result){
             this.showToast('success','El email se ha enviado con éxito','');
+            jQuery('#recuperarPass').modal('hide');
           }else{
             this.showToast('error','Lo sentimos ha ocurrido un error, por favor contacta al Administrador','Error');
           }
