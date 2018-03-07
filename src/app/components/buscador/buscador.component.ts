@@ -56,6 +56,7 @@ export class BuscadorComponent implements OnInit {
 
   abrirMantenedorUsuario(){
     this.verMantenedorUsuario = true;
+    this.verVisor = false;
   }
 
   verConfigUsuario(){
