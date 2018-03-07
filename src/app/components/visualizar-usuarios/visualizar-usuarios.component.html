@@ -5,7 +5,7 @@
       <div class="form-inline justify-content-between">
           <button type="button" class="btn btn_naranja" data-toggle="modal" data-target="#modalCrearUsuario" (click)="modalCrearUsuario()"><i class="fas fa-user-plus"></i> Crear Usuario</button>
           <div class="input-group">
-              <input type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
+              <input [(ngModel)]="termino" (keyup)="buscarUser()"  type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
               <span class="input-group-text" id="basic-addon1" (click)="refresh()"><i class="fas fa-sync"></i></span>
@@ -153,7 +153,12 @@
         <p>Para crear usuarios nuevos, presione el botón superior izquierdo</p>
         <p><i class="fas fa-user-plus"></i> <strong>Crear Usuario</strong></p>
       </div> 
-</div>
+
+  </div>
+        <!--tabla busqueda-->
+        <div *ngIf="termino">
+            <h1>{{termino}}</h1>
+          </div>
 </div>
 
 

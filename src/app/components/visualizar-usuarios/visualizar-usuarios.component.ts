@@ -441,7 +441,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         .keyboard(27)
         .body(html)
         .open();
-console.log(usuario);
+    console.log(usuario);
   }
   activarUsuario(usuario){
     console.log(usuario);
@@ -520,6 +520,23 @@ console.log(usuario);
       nuevoUsuarioContrasena2: ''
     } );
     
+  }
+
+  buscarUser(){
+    if(this.termino.length == 0){
+      return;
+    }
+    this.usu.getUserName(this.termino).subscribe(      
+      data => {
+      if (data){
+        var result = data.json(); 
+        console.log(result);
+        this.loading=false;
+      }
+    },
+    err => console.error(err),
+    () => console.log('get info buscar'));
+    console.log(this.termino);
   }
 
 }
