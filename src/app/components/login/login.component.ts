@@ -30,6 +30,7 @@ export class LoginComponent {
   msjReset:string;
   iconAccion = "fa-search";
   emailUser:string;
+  passUser:string;
 
   constructor( private auth:ServicioLoginService,
                private router: Router,
@@ -84,7 +85,6 @@ export class LoginComponent {
     );
  
   }
-
   checkUser(loginRecuperar){
  
     if(!this.loginRecuperar){
@@ -96,11 +96,12 @@ export class LoginComponent {
       this.usu.getUserName(this.loginRecuperar).subscribe(
           data => {
             if (data){
-              var usuarioO = data.json();
+              var usuarioO = data.json(); 
               if (usuarioO.Datos) {
                 //correo electronico a mostrar, hay que aplicar encriptación
                 if (usuarioO.Mensaje.Codigo == "0"){
                   this.emailUser = usuarioO.Datos.Persona.CorreoElectronico;
+                  this.passUser = usuarioO.Datos.AutentificacionUsuario.Password;
                   this.iconAccion = "fas fa-check"
                   this.msjReset="";
                 }
@@ -124,6 +125,30 @@ export class LoginComponent {
     }
     
   }
+  recuperarPass(){
+    this.loading=true;
+    this.usu.postRecuperarClave(this.emailUser,this.loginUsuario, this.passUser).subscribe(
+      data => {
+        if (data){
+          var result = data.json(); 
+          if(result){
+            this.showToast('success','El email se ha enviado con éxito','');
+          }else{
+            this.showToast('error','Lo sentimos ha ocurrido un error, por favor contacta al Administrador','Error');
+          }
+          this.loading=false;
+        }
+      },
+      err => console.error(err),
+      () => console.log('get info recuperar')
+    );
+  }
+  clearData(){
+    this.loginRecuperar = "";
+    this.msjReset="";
+    this.emailUser="";
+    this.iconAccion = "fa-search";
+  }
   showToast(tipo, mensaje, titulo){
     if (tipo == 'success'){
       this.toastr.success(mensaje, titulo);
@@ -138,17 +163,6 @@ export class LoginComponent {
       this.toastr.warning(mensaje, titulo);
     }
 
-  }
-
-  recuperarPass(){
-
-
-  }
-  clearData(){
-    this.loginRecuperar = "";
-    this.msjReset="";
-    this.emailUser="";
-    this.iconAccion = "fa-search";
   }
 
 }
