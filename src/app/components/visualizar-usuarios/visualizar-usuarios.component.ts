@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef  } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AUTO_STYLE  } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
@@ -12,8 +12,8 @@ import {$NBSP} from "@angular/compiler/src/chars";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
 
-
 bootstrap4Mode();
+declare var jQuery:any;
 
 @Component({
   selector: 'app-visualizar-usuarios',
@@ -29,23 +29,12 @@ export class VisualizarUsuariosComponent implements OnInit {
   //usuario logueado
   loading = false;
   usuario: any;
+  tipoDeAccion:string;
+  //usuario editado
+  ausIdUsuarioEditado;
 
   //formulario
   forma:FormGroup;
-
-  //parametros para funcion de crearModificarUser()
-  /*nombreUsuario,
-  ecolId,
-  rolId,
-  nombres,
-  primerApellido,
-  segundoApellido,
-  correoElectronico,
-  ausId,
-  password,
-  telefonoContactoUno,
-  telefonoContactoDos,
-  run */
 
   constructor(
     private usu:UsuarioService,
@@ -72,8 +61,10 @@ export class VisualizarUsuariosComponent implements OnInit {
         'nuevoUsuarioRun': new FormControl(),
         'nuevoUsuarioCorreo': new FormControl('', [Validators.required,
                                                    Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
-        'nuevoUsuarioTelefono1': new FormControl(),
-        'nuevoUsuarioTelefono2': new FormControl(),
+        'nuevoUsuarioTelefono1': new FormControl('', [Validators.minLength(9),
+                                                      Validators.maxLength(9)]),
+        'nuevoUsuarioTelefono2': new FormControl('', [Validators.minLength(9),
+                                                      Validators.maxLength(9)]),
         'nuevoUsuarioEntidad': new FormControl('', Validators.required),
         'nuevoUsuarioRol': new FormControl('', Validators.required),
         'nuevoUsuarioContrasena1': new FormControl(),
@@ -92,14 +83,8 @@ export class VisualizarUsuariosComponent implements OnInit {
     }
   }
 
-  onSubmitTemplateBased(){
-    console.log("click");
-  }
-
-  guardarUsuario(){
-    //console.log(this.nuevoUsuario + this.nuevoUsuarioRun + this.nuevoUsuarioNombre + this.nuevoUsuarioApellidoPat +
-               // this.nuevoUsuarioCorreo + this.nuevoUsuarioTelefono1 + this.nuevoUsuarioTelefono2 + this.nuevoUsuarioEntidad +
-                //this.nuevoUsuarioRol + this.nuevoUsuarioContrasena1 + this.nuevoUsuarioContrasena2);
+  guardarUsuario(usuario){
+    
     console.log(this.forma.value);
     console.log(this.forma.status);
     console.log(this.forma.valid);
@@ -117,8 +102,10 @@ export class VisualizarUsuariosComponent implements OnInit {
       }
       var correoElectronico = this.forma.value.nuevoUsuarioCorreo;
       //en este caso es 0 ya que es un usuario nuevo
-      var ausId = 0;
-      var password = this.forma.value.nuevoUsuarioContrasena1;
+      var ausId;
+      if(this.tipoDeAccion == 'Editar'){
+        ausId = this.ausIdUsuarioEditado;
+      }
       var telefonoUno = '';
       if (this.forma.value.nuevoUsuarioTelefono1 != null){
         telefonoUno = this.forma.value.nuevoUsuarioTelefono1;
@@ -131,23 +118,33 @@ export class VisualizarUsuariosComponent implements OnInit {
       if (this.forma.value.nuevoUsuarioRun != null){
         run = this.forma.value.nuevoUsuarioRun;
       }
+      var password = '';
       var password2 = '';
-      if (this.forma.value.nuevoUsuarioContrasena2 != null){
-        password2 = this.forma.value.nuevoUsuarioContrasena2;
+
+      if(this.tipoDeAccion == 'Crear'){
+        ausId = 0;
+        if (this.forma.value.nuevoUsuarioContrasena1 != null){
+          password = this.forma.value.nuevoUsuarioContrasena1;
+        }
+        if (this.forma.value.nuevoUsuarioContrasena1 != null){
+          password2 = this.forma.value.nuevoUsuarioContrasena2;
+        }
+        if (password == null || password == ''){
+          this.showToast('error', 'Password es requerida', 'Error');
+          return;
+        }
+        if (password2 == null || password2 == ''){
+          this.showToast('error', 'Repita Password es requerida', 'Error');
+          return;
+        }
+        if (password != password2){
+          this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
+          return;
+        }
       }
-      if (password == null || password == ''){
-        this.showToast('error', 'Password es requerida', 'Error');
-        return;
-      }
-      if (password2 == null || password2 == ''){
-        this.showToast('error', 'Repita Password es requerida', 'Error');
-        return;
-      }
-      if (password != password2){
-        this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
-        return;
-      }
+     
       //ahora tenemos todos los elementos listos, podemos enviar a guardar
+      this.loading = true;
       this.usu.crearModificarUser(
         nombreUsuario,
         ecolId,
@@ -163,7 +160,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         run
       ).subscribe(
         data => {
-          this.loading = true;
+          
           if (data){
             var usuarioCambiado = data.json();
 
@@ -171,10 +168,24 @@ export class VisualizarUsuariosComponent implements OnInit {
             if (usuarioCambiado.Datos){
               console.log(usuarioCambiado.Datos);
               console.log(usuarioCambiado.Mensaje);
-              this.showToast('success', 'Usuarios creado con éxito', 'Nuevo');
+              if(this.tipoDeAccion == 'Crear'){
+                this.showToast('success', 'Usuario creado con éxito', 'Nuevo');
+              }
+              if(this.tipoDeAccion == 'Editar'){
+                this.showToast('success', 'Usuario editado con éxito', 'Edición');
+              }
               //actualizamos la lista
               this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
               this.loading = false;
+              //Aca limpiamos los campos
+              if(this.tipoDeAccion == 'Crear'){
+                this.forma.reset({});
+              }
+              if(this.tipoDeAccion == 'Editar'){
+                //cerrar modal
+                jQuery("#modalCrearUsuario").modal("hide");
+              }
+              
             }
             else{
               //levantar un modal que hubo un error
@@ -204,16 +215,10 @@ export class VisualizarUsuariosComponent implements OnInit {
           },
         () => console.log('creado con exito')
       );
-      
-
     }
-    
-    
-
-    /*this.usu.crearModificarUser().subscribe(
-
-    );*/
   }
+
+
   refresh(){
     this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
   }
@@ -231,13 +236,13 @@ export class VisualizarUsuariosComponent implements OnInit {
               this.listaUsuarios = lista.Datos;
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
               this.loading = false;
+              console.log(this.listaUsuarios);
             }
             else{
               //levantar un modal que hubo un error
               this.showToast('error', 'Error al recuperar usuarios', 'Usuarios');
-              this.loading = false;
             }
-
+            this.loading = false;
           }
         },
         err => console.error(err),
@@ -345,7 +350,7 @@ export class VisualizarUsuariosComponent implements OnInit {
                   if (usuarioCambiado.Datos){
                     console.log(usuarioCambiado.Datos);
                     console.log(usuarioCambiado.Mensaje);
-                    this.showToast('success', 'Usuarios eliminado con éxito', 'Activado');
+                    this.showToast('success', 'Usuario eliminado con éxito', 'Activado');
                     //actualizamos la lista
                     this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
                   }
@@ -394,7 +399,7 @@ export class VisualizarUsuariosComponent implements OnInit {
                 if (usuarioCambiado.Datos){
                   console.log(usuarioCambiado.Datos);
                   console.log(usuarioCambiado.Mensaje);
-                  this.showToast('success', 'Usuarios desactivado con éxito', 'Usuarios');
+                  this.showToast('success', 'Usuario desactivado con éxito', 'Usuarios');
                   //actualizamos la lista
                   this.obtenerListaUsuarios(this.usuario.AutentificacionUsuario.EcolId.toString(), this.usuario.AutentificacionUsuario.RolId.toString());
                 }
@@ -418,7 +423,7 @@ export class VisualizarUsuariosComponent implements OnInit {
 
   }
   viewUser(usuario){
-    var html = '<h4 class="text-center" style="padding-bottom: 15px;">' +usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno + ' ' + usuario.Persona.ApellidoMaterno + ', Rol ' + usuario.Rol.Nombre + '</h4>' +
+    var html = '<h4 class="text-center" style="padding-bottom: 15px;">' +usuario.Persona.Nombres + ' ' + usuario.Persona.ApellidoPaterno + ' ' + usuario.Persona.ApellidoMaterno + '<br>Rol: ' + usuario.Rol.Nombre + '</h4>' +
     '<div class="container">'+
     '<div class="row header-info"><div class="col-3 text-center">Nombre Usuario</div><div class="col-3 text-center">Run</div><div class="col-6 text-center">Correo Electrónico</div></div>' +
     '<div class="row header-row"><div class="col-3 text-center">' + usuario.AutentificacionUsuario.NombreUsuario + '</div><div class="col-3 text-center">' + usuario.Persona.Run + '</div><div class="col-6 text-center">' + usuario.Persona.CorreoElectronico + '</div></div>' +
@@ -433,7 +438,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         .keyboard(27)
         .body(html)
         .open();
-
+console.log(usuario);
   }
   activarUsuario(usuario){
     console.log(usuario);
@@ -485,10 +490,33 @@ export class VisualizarUsuariosComponent implements OnInit {
     );
 
   }
-  verUsuario(){
-    //ver usuario
+ 
+  modalCrearUsuario(){
+    this.tipoDeAccion = 'Crear';
+    this.forma.reset({});
   }
-  editarUsuario(){
+
+  editarUsuario(usuario){
     //editar usuario
+    console.log(usuario);
+    this.tipoDeAccion = 'Editar';
+    this.ausIdUsuarioEditado =  usuario.Persona.AusId;
+    console.log(this.ausIdUsuarioEditado);
+    this.forma.setValue( {
+      nuevoUsuarioNombre: usuario.Persona.Nombres,
+      nuevoUsuarioApellidoPat: usuario.Persona.ApellidoPaterno,
+      nuevoUsuarioApellidoMat: usuario.Persona.ApellidoMaterno,
+      nuevoUsuario: usuario.AutentificacionUsuario.NombreUsuario,
+      nuevoUsuarioRun: usuario.Persona.Run,
+      nuevoUsuarioCorreo: usuario.Persona.CorreoElectronico,
+      nuevoUsuarioTelefono1: usuario.Persona.TelefonoContactoUno,
+      nuevoUsuarioTelefono2: usuario.Persona.TelefonoContactoDos,
+      nuevoUsuarioEntidad: usuario.EntidadContratante.Id,
+      nuevoUsuarioRol: usuario.Rol.Id,
+      nuevoUsuarioContrasena1: '',
+      nuevoUsuarioContrasena2: ''
+    } );
+    
   }
+
 }

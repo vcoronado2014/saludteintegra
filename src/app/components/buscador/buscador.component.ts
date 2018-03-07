@@ -14,7 +14,9 @@ export class BuscadorComponent implements OnInit {
   nombreCompleto: string;
   usuarioUser:string;
   nombreEntidadContratante:string;
+  rolUsuario:string;
   verMantenedorUsuario:boolean = false;
+  verVisor:boolean = false;
 
   constructor(
     private router: Router,
@@ -32,6 +34,7 @@ export class BuscadorComponent implements OnInit {
       this.usuarioUser = this.usuario.AutentificacionUsuario.NombreUsuario;
       this.nombreCompleto = this.usuario.Persona.Nombres + ' ' + this.usuario.Persona.ApellidoPaterno + ' ' + this.usuario.Persona.ApellidoMaterno;
       this.nombreEntidadContratante = this.usuario.EntidadContratante.RazonSocial;
+      this.rolUsuario = this.usuario.Rol.Nombre;
       console.log(this.usuario);
     }
     else{
@@ -45,13 +48,21 @@ export class BuscadorComponent implements OnInit {
       )
     }
   }
+
   buscarRun(){
     this.verMantenedorUsuario = false;
+    this.verVisor = true;
   }
 
   abrirMantenedorUsuario(){
     this.verMantenedorUsuario = true;
   }
+
+  verConfigUsuario(){
+    this.verMantenedorUsuario = false;
+    this.verVisor = false;
+  }
+
   //logout
   logout(){
     this.acceso.logout();
