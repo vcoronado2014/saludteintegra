@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AUTO_STYLE  } from '@angular/core';
 import { Router } from "@angular/router";
 import * as moment from 'moment';
 import { ServicioLoginService } from '../../services/servicio-login.service';
@@ -30,9 +30,11 @@ export class BuscadorComponent implements OnInit {
     private router: Router,
     public acceso: ServicioLoginService,
     public visor: ServicioVisorService,
-    private toastr: ToastsManager
+    private toastr: ToastsManager,
+    private _vcr: ViewContainerRef
   ) {
       this.urlVisor = "";
+      this.toastr.setRootViewContainerRef(_vcr);
   }
 
   ngOnInit() {
@@ -73,7 +75,14 @@ export class BuscadorComponent implements OnInit {
     }
 
   }
+  limpiarRun(){
+    this.rutBuscar = "";
+  }
   buscarRun(){
+    if (this.rutBuscar == '' || this.rutBuscar == null){
+      this.showToast('error', 'Debe ingresar un Run', 'Visor');
+      return;
+    }
     this.verMantenedorUsuario = false;
     
     //alert(this.rutBuscar);
@@ -94,17 +103,33 @@ export class BuscadorComponent implements OnInit {
           else{
             //levantar un modal que hubo un error
             this.showToast('error', 'Error al recuperar url desde Visor', 'Visor');
-
+            this.limpiarRun();
           }
         }
         else{
           this.showToast('error', 'Error al recuperar url desde Visor', 'Visor');
+          this.limpiarRun();
         }
 
         }
       },
       err =>{ 
         console.error(err);
+        var respuesta = err.json();
+        if (respuesta){
+          if (respuesta.Mensaje){
+            this.showToast('error', respuesta.Mensaje.Texto, 'Visor');
+          }
+          else
+          {
+            this.showToast('error', 'Error al recuperar url desde Visor', 'Visor');
+          }
+          this.limpiarRun();
+        }
+        else {
+          this.showToast('error', 'Error al recuperar url desde Visor', 'Visor');
+          this.limpiarRun();
+        }
 
       },
       () => console.log('get info contratantes')
