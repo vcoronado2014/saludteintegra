@@ -27,7 +27,7 @@ import { ServicioLoginService } from './services/servicio-login.service';
 import { UsuarioService } from './services/usuario.service';
 import { RolService } from './services/rol.service';
 import { ContratanteService } from './services/contratante.service';
-
+import { ServicioVisorService } from './services/servicio-visor.service';
 
 
 @NgModule({
@@ -57,7 +57,8 @@ import { ContratanteService } from './services/contratante.service';
     ServicioLoginService,
     UsuarioService,
     RolService,
-    ContratanteService
+    ContratanteService,
+    ServicioVisorService
   ],
   bootstrap: [AppComponent]
 })

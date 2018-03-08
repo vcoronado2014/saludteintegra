@@ -35,7 +35,7 @@
         </div>
         <div class="modal-body text-center">
           <p>Ingrese el RUN del paciente</p>
-          <input type="text" class="form-control" placeholder="Ingrese RUN">
+          <input type="text" [(ngModel)]="rutBuscar" class="form-control" placeholder="Ingrese RUN">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -51,7 +51,8 @@
 
   <div *ngIf="verVisor">
       <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+       <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe> -->
+       <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
       </div>   
   </div>
 
