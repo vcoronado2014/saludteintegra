@@ -6,6 +6,8 @@ import { ServicioVisorService } from '../../services/servicio-visor.service';
 /* Importing ToastsManager library starts*/
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
+import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
+import { appSettings } from '../../appSettings';
 
 @Component({
   selector: 'app-buscador',
@@ -23,7 +25,7 @@ export class BuscadorComponent implements OnInit {
   verVisor:boolean = false;
   //agregado por victor
   rutBuscar: string;
-  urlVisor: string;
+  urlVisor: SafeResourceUrl;
 
 
   constructor(
@@ -31,9 +33,10 @@ export class BuscadorComponent implements OnInit {
     public acceso: ServicioLoginService,
     public visor: ServicioVisorService,
     private toastr: ToastsManager,
-    private _vcr: ViewContainerRef
+    private _vcr: ViewContainerRef,
+    public sanitizer: DomSanitizer
   ) {
-      this.urlVisor = "";
+      this.urlVisor = sanitizer.bypassSecurityTrustResourceUrl('#');
       this.toastr.setRootViewContainerRef(_vcr);
   }
 
@@ -79,12 +82,19 @@ export class BuscadorComponent implements OnInit {
     this.rutBuscar = "";
   }
   buscarRun(){
+    //que no este vacio o nulo
     if (this.rutBuscar == '' || this.rutBuscar == null){
       this.showToast('error', 'Debe ingresar un Run', 'Visor');
       return;
     }
+    //que sea mayor a 2 y menor 10 caracteres
+    if (this.rutBuscar.length < 2 || this.rutBuscar.length > 9){
+      this.showToast('error', 'Largo del Run incorrecto', 'Visor');
+      return;
+    }
+
     this.verMantenedorUsuario = false;
-    
+    this.verVisor = false;
     //alert(this.rutBuscar);
     this.visor.postUrl(this.rutBuscar).subscribe(
       data => {
@@ -95,14 +105,21 @@ export class BuscadorComponent implements OnInit {
           //este arreglo habria que recorrerlo con un ngfor
           if (lista.Datos){
             //this.listaContratantes = lista.Datos;
-            this.urlVisor = lista.Datos;
+            //solo para efectos de prueba
+            //https://previsor.saludenred.cl/#/MTI1MzUzMDYx/MQ==/MTQ3MTQ2NA==/0A5DE165204DD5F4948932BA5B830584
+            var nuevaUrl =appSettings.URL_VISOR_SOBRESCRIBIR +   lista.Datos.UrlHash;
+            
+            this.urlVisor = this.sanitizer.bypassSecurityTrustResourceUrl(nuevaUrl);
             this.verVisor = true;
+            //cerrar modal limpiar
+            this.limpiarRun();
+            $('#exampleModal').modal('hide');
 
             //console.log(this.listaContratantes);
           }
           else{
             //levantar un modal que hubo un error
-            this.showToast('error', 'Error al recuperar url desde Visor', 'Visor');
+            this.showToast('error', 'No hay Datos del usuario', 'Visor');
             this.limpiarRun();
           }
         }
