@@ -3,11 +3,12 @@ import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
 import { Router } from "@angular/router";
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
 import {$NBSP} from "@angular/compiler/src/chars";
+import { Ng2Rut, RutValidator } from 'ng2-rut'; 
 /* Importing ToastsManager library starts*/
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
@@ -36,6 +37,9 @@ export class VisualizarUsuariosComponent implements OnInit {
   //formulario
   forma:FormGroup;
 
+  //busqueda de usuario
+  termino:string;
+
   constructor(
     private usu:UsuarioService,
     private rol:RolService,
@@ -43,7 +47,9 @@ export class VisualizarUsuariosComponent implements OnInit {
     private router: Router,
     public modal:Modal,
     private toastr: ToastsManager,
-    private _vcr: ViewContainerRef
+    private _vcr: ViewContainerRef,
+    private fb: FormBuilder, 
+    private rutValidator: RutValidator
   ) {
       this.listaUsuarios = [];
       this.listaRoles = [];
@@ -234,6 +240,12 @@ export class VisualizarUsuariosComponent implements OnInit {
             //este arreglo habria que recorrerlo con un ngfor
             if (lista.Datos) {
               this.listaUsuarios = lista.Datos;
+              if (this.listaUsuarios){
+                for (var s=0; s<this.listaUsuarios.length; s++){
+                  var nombreCompleto = this.listaUsuarios[s].Persona.Nombres + ' ' + this.listaUsuarios[s].Persona.ApellidoPaterno + ' ' + this.listaUsuarios[s].Persona.ApellidoMaterno;
+                  this.listaUsuarios[s].Persona.NombreCompleto = nombreCompleto;
+                }
+              }
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
               this.loading = false;
               console.log(this.listaUsuarios.length);
@@ -438,7 +450,7 @@ export class VisualizarUsuariosComponent implements OnInit {
         .keyboard(27)
         .body(html)
         .open();
-console.log(usuario);
+    console.log(usuario);
   }
   activarUsuario(usuario){
     console.log(usuario);
@@ -517,6 +529,44 @@ console.log(usuario);
       nuevoUsuarioContrasena2: ''
     } );
     
+  }
+
+  buscarUser(){
+    if(this.termino.length == 0){
+
+      this.refresh();
+
+      return;
+    }
+    //nos aseguramos que hayan elementos en la lista
+    var listaRetorno = [];
+    if (this.listaUsuarios){
+      //y nos aseguramos aun mas
+      if (this.listaUsuarios.length > 0){
+        //ahora podemos empezar a recorrer la lista
+        this.loading = true;
+        for(var i=0; i < this.listaUsuarios.length; i++){
+          //tomamos el elemneto y lo comparamos
+          //para este ejemplo con el nombre usuario
+          var objeto = this.listaUsuarios[i];
+          if (objeto.AutentificacionUsuario.NombreUsuario.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Persona.NombreCompleto.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Persona.CorreoElectronico.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Rol.Nombre.toLowerCase().includes(this.termino.toLowerCase())){
+            //si es igual
+            console.log(objeto);
+            listaRetorno.push(objeto);
+          }
+          this.loading = false;
+        }
+
+      }
+    }
+    //aca comprobamos si hay elementos en la lista de retorno
+    if (listaRetorno.length > 0){
+      this.listaUsuarios = listaRetorno;
+    }
+
   }
 
 }
