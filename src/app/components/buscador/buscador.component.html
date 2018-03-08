@@ -23,6 +23,8 @@
   </div>
 </nav>
 
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '12px' }"></ngx-loading> 
+
 <!-- Modal Buscar Paciente-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -45,11 +47,11 @@
     </div>
   </div>
 
-  <div *ngIf="verMantenedorUsuario">
+  <div *ngIf="verMantenedorUsuario" class="animated fadeIn fast">
      <app-visualizar-usuarios></app-visualizar-usuarios>
   </div>
 
-  <div *ngIf="verVisor">
+  <div *ngIf="verVisor" class="animated fadeIn fast">
       <div class="embed-responsive embed-responsive-16by9">
         <iframe [src]="urlVisor" frameborder="0" allowfullscreen="" scrolling="yes" style="overflow: hidden; width: 100%; overflow-x: hidden; overflow-y: scroll"></iframe>
        
@@ -57,9 +59,9 @@
   </div>
 
   <div  *ngIf="verMantenedorUsuario == false && verVisor == false">
-    <div class="container mt-5 text-center">
-      <div class="row">
-        <div class="col text-center">
+    <div class="container mt-5">
+      <div class="row animated fadeIn fast">
+        <div class="col text-center" id="col_cambiarContrasena">
             <i class="far fa-address-card fa-6x mb-3"></i>
             <p>Hola <strong>{{nombreCompleto}}</strong></p>
             <p>Tu rol en <strong>{{nombreEntidadContratante}}</strong> es de <strong>{{rolUsuario}}</strong></p> 
@@ -67,14 +69,27 @@
             <p *ngIf="rolUsuario != 'Usuario Establecimiento'"><i class="fas fa-check-circle"></i> Crear usuarios nuevos.</p>
             <p *ngIf="rolUsuario != 'Usuario Establecimiento'"><i class="fas fa-check-circle"></i> Editar datos de usuarios creados.</p>
             <p><i class="fas fa-check-circle"></i> Visualizar registros clínicos de pacientes.</p>   
+            <button class="btn btn_buscar mt-3" data-toggle="collapse" (click)="mostrarContrasena()" data-target="#cambiarContrasena">Cambiar Contraseña</button>
         </div>
-        <div class="col collapse" id="cambiarContrasena">
-          <p>Me muestro al hacer click</p>
-          <input type="text" class="block">
-          <input type="text" class="block">
+        <div class="col collapse mt-5" id="cambiarContrasena">
+            <form>
+              <h4>Introduce tu nueva contraseña personal</h4>
+              <small><p class="font-italic">Una vez realizado el cambio de contraseña, serás redireccionado a la página de login</p></small>
+              
+              <div class="form-group mt-4">
+                <label for="exampleInputPassword1">Contraseña nueva</label>
+                <input [(ngModel)]="cambioContrasena1" name="cambioContrasena1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Introducir contraseña">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword2">Repita la contraseña</label>
+                <input [(ngModel)]="cambioContrasena2" name="cambioContrasena2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Repetir contraseña">
+              </div>
+              <button (click)="cambiarContrasena()" type="button" class="btn btn_buscar right">Confirmar</button>
+            </form>
+             
         </div>
       </div>
-      <button class="btn btn_buscar" data-toggle="collapse" data-target="#cambiarContrasena">Cambiar Contraseña</button>
+      
     </div>
   </div>
  

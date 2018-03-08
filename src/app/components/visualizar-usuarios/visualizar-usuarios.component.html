@@ -1,11 +1,11 @@
 <div class="container mt-4">
-
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '12px' }"></ngx-loading>
   <div class="row ">
     <div class="col">
       <div class="form-inline justify-content-between">
           <button type="button" class="btn btn_naranja" data-toggle="modal" data-target="#modalCrearUsuario" (click)="modalCrearUsuario()"><i class="fas fa-user-plus"></i> Crear Usuario</button>
           <div class="input-group">
-              <input type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
+              <input [(ngModel)]="termino" (keyup)="buscarUser()"  type="text" class="form-control input_ingreseUsuario" placeholder="Ingrese el nombre del usuario" aria-label="Username" aria-describedby="basic-addon1">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
               <span class="input-group-text" id="basic-addon1" (click)="refresh()"><i class="fas fa-sync"></i></span>
@@ -46,13 +46,13 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                   <label for="inputUser">Usuario*</label>
                   <input type="text" class="form-control" id="inputUser" placeholder="Usuario" formControlName="nuevoUsuario">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                   <label for="inputRun">RUN (opcional)</label>
-                  <input type="text" class="form-control" id="inputRun" placeholder="12.345.678-k" formControlName="nuevoUsuarioRun">
+                  <input type="text" class="form-control" id="inputRun" formatRut name="rut" maxlength="9" placeholder="RUN" formControlName="nuevoUsuarioRun">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputEmail">Correo electrónico*</label>
@@ -63,11 +63,11 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="telefono1">Teléfono de contacto 1 (opcional)</label>
-                  <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" formControlName="nuevoUsuarioTelefono1">
+                  <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" maxlength="9" formControlName="nuevoUsuarioTelefono1">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="telefono2">Teléfono de contacto 2 (opcional)</label>
-                  <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" formControlName="nuevoUsuarioTelefono2">
+                  <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" maxlength="9" formControlName="nuevoUsuarioTelefono2">
                 </div>
               </div>
 
@@ -115,7 +115,6 @@
     </div>
   </div>
 
-
   <!-- table usuarios-->
   <div *ngIf="listaUsuarios">
     <table class="table table-hover mt-4">
@@ -132,7 +131,7 @@
       <tbody *ngIf="listaUsuarios.length != 0">
         <tr *ngFor="let usuario of listaUsuarios">
           <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
-          <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
+          <td>{{usuario.Persona.NombreCompleto}}</td>
           <td>{{usuario.Persona.CorreoElectronico}}</td>
           <td>{{usuario.Rol.Nombre}}</td>
           <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
@@ -154,7 +153,8 @@
         <p>Para crear usuarios nuevos, presione el botón superior izquierdo</p>
         <p><i class="fas fa-user-plus"></i> <strong>Crear Usuario</strong></p>
       </div> 
-</div>
+
+  </div>
 </div>
 
 

@@ -27,7 +27,7 @@ export class LoginComponent {
   usuario: any;
   loading = false;
   resetPass = false;
-  msjReset:string;
+  msjReset:any;
   iconAccion = "fa-search";
   emailUser:string;
   passUser:string;
@@ -86,7 +86,9 @@ export class LoginComponent {
  
   }
   checkUser(loginRecuperar){
- 
+    if(this.loginRecuperar.length == 0 ){
+      this.clearData();
+    }
     if(!this.loginRecuperar){
       this.msjReset= "Usuario incorrecto, inténtalo nuevamente. Si no recuerdas tu nombre de usuario por favor contacta al Administrador."
       }  
@@ -146,7 +148,7 @@ export class LoginComponent {
   }
   clearData(){
     this.loginRecuperar = "";
-    this.msjReset="";
+    this.msjReset = !this.msjReset;
     this.emailUser="";
     this.iconAccion = "fa-search";
   }
