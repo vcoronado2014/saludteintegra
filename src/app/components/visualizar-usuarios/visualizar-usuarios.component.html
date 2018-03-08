@@ -131,7 +131,8 @@
       <tbody *ngIf="listaUsuarios.length != 0">
         <tr *ngFor="let usuario of listaUsuarios">
           <th scope="row">{{usuario.AutentificacionUsuario.NombreUsuario}}</th>
-          <td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>
+          <!--<td>{{usuario.Persona.Nombres}} {{usuario.Persona.ApellidoPaterno}} {{usuario.Persona.ApellidoMaterno}}</td>-->
+          <td>{{usuario.Persona.NombreCompleto}}</td>
           <td>{{usuario.Persona.CorreoElectronico}}</td>
           <td>{{usuario.Rol.Nombre}}</td>
           <td *ngIf="usuario.AutentificacionUsuario.Activo == 1">Activo</td>
@@ -155,10 +156,6 @@
       </div> 
 
   </div>
-        <!--tabla busqueda-->
-        <div *ngIf="termino">
-            <h1>{{termino}}</h1>
-          </div>
 </div>
 
 

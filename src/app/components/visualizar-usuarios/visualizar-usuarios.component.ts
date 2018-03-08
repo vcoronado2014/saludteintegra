@@ -237,6 +237,12 @@ export class VisualizarUsuariosComponent implements OnInit {
             //este arreglo habria que recorrerlo con un ngfor
             if (lista.Datos) {
               this.listaUsuarios = lista.Datos;
+              if (this.listaUsuarios){
+                for (var s=0; s<this.listaUsuarios.length; s++){
+                  var nombreCompleto = this.listaUsuarios[s].Persona.Nombres + ' ' + this.listaUsuarios[s].Persona.ApellidoPaterno + ' ' + this.listaUsuarios[s].Persona.ApellidoMaterno;
+                  this.listaUsuarios[s].Persona.NombreCompleto = nombreCompleto;
+                }
+              }
               //this.showToast('success', 'Usuarios recuperados con éxito', 'Usuarios');
               this.loading = false;
               console.log(this.listaUsuarios.length);
@@ -524,19 +530,39 @@ export class VisualizarUsuariosComponent implements OnInit {
 
   buscarUser(){
     if(this.termino.length == 0){
+
+      this.refresh();
+
       return;
     }
-    this.usu.getUserName(this.termino).subscribe(      
-      data => {
-      if (data){
-        var result = data.json(); 
-        console.log(result);
-        this.loading=false;
+    //nos aseguramos que hayan elementos en la lista
+    var listaRetorno = [];
+    if (this.listaUsuarios){
+      //y nos aseguramos aun mas
+      if (this.listaUsuarios.length > 0){
+        //ahora podemos empezar a recorrer la lista
+        this.loading = true;
+        for(var i=0; i < this.listaUsuarios.length; i++){
+          //tomamos el elemneto y lo comparamos
+          //para este ejemplo con el nombre usuario
+          var objeto = this.listaUsuarios[i];
+          if (objeto.AutentificacionUsuario.NombreUsuario.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Persona.NombreCompleto.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Persona.CorreoElectronico.toLowerCase().includes(this.termino.toLowerCase())
+              || objeto.Rol.Nombre.toLowerCase().includes(this.termino.toLowerCase())){
+            //si es igual
+            listaRetorno.push(objeto);
+          }
+          this.loading = false;
+        }
+
       }
-    },
-    err => console.error(err),
-    () => console.log('get info buscar'));
-    console.log(this.termino);
+    }
+    //aca comprobamos si hay elementos en la lista de retorno
+    if (listaRetorno.length > 0){
+      this.listaUsuarios = listaRetorno;
+    }
+
   }
 
 }
