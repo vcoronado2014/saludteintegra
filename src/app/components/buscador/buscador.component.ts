@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from "@angular/router";
 import * as moment from 'moment';
 import { ServicioLoginService } from '../../services/servicio-login.service';
+import { UsuarioService } from '../../services/usuario.service';
+/* Importing ToastsManager library starts*/
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-buscador',
@@ -15,14 +22,21 @@ export class BuscadorComponent implements OnInit {
   usuarioUser:string;
   nombreEntidadContratante:string;
   rolUsuario:string;
+  cambioContrasena1;
+  cambioContrasena2;
   verMantenedorUsuario:boolean = false;
   verVisor:boolean = false;
+  loading = false;
 
   constructor(
     private router: Router,
-    public acceso: ServicioLoginService
+    public acceso: ServicioLoginService,
+    private usu:UsuarioService,
+    private toastr: ToastsManager,
+    private _vcr: ViewContainerRef,
+    private modal: Modal
   ) {
-
+    this.toastr.setRootViewContainerRef(_vcr);
   }
 
   ngOnInit() {
@@ -77,5 +91,71 @@ export class BuscadorComponent implements OnInit {
     )
   }
 
+  //hace toggle del segmento para ingresar la contraseña
+  mostrarContrasena(){
+    jQuery("#col_cambiarContrasena").addClass("animated fadeIn fast");
+    setTimeout(function () { 
+      jQuery("#col_cambiarContrasena").removeClass("animated fadeIn fast");
+  }, 2000);
+  }
+
+  cambiarContrasena(){
+    
+    var password;
+    if (this.cambioContrasena1 == null || this.cambioContrasena1 == ''){
+      this.showToast('error', 'Contraseña es requerida', 'Error');
+      return;
+    }
+    if (this.cambioContrasena2 == null || this.cambioContrasena2 == ''){
+      this.showToast('error', 'Repetir contraseña es requerida', 'Error');
+      return;
+    }
+    if (this.cambioContrasena1 != this.cambioContrasena2){
+      this.showToast('error', 'Las contraseñas deben coincidir', 'Error');
+      return;
+    }
+    if(this.cambioContrasena1 == this.cambioContrasena2){
+      password = this.cambioContrasena1; 
+    }
+    this.loading = true;
+    this.usu.getCambiarClave(this.usuario.Persona.CorreoElectronico, this.usuarioUser, password).subscribe(
+      data => {
+        if(data){
+          var retorno = data.json(); 
+          if (retorno.Mensaje.Codigo == '0'){
+            //this.showToast('success', 'La contraseña se ha cambiado con éxito', 'Cambio exitoso');
+            this.logout();
+            this.loading = false;
+          }
+          else {
+            this.showToast('error', retorno.Mensaje.Texto, 'Error');
+            this.loading = false;
+          }
+          
+        }else{
+          this.showToast('error', 'Ha ocurrido un error, inténtalo nuevamente', 'Error');
+          this.loading = false;
+        }
+      },
+      err => console.error(err),
+      () => console.log('cambio de contraseña')
+    )
+  }
+
+  showToast(tipo, mensaje, titulo){
+    if (tipo == 'success'){
+      this.toastr.success(mensaje, titulo);
+    }
+    if (tipo == 'error'){
+      this.toastr.error(mensaje, titulo);
+    }
+    if (tipo == 'info'){
+      this.toastr.info(mensaje, titulo);
+    }
+    if (tipo == 'warning'){
+      this.toastr.warning(mensaje, titulo);
+    }
+
+  }
   
 }
