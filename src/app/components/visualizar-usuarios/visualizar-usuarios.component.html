@@ -46,13 +46,13 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                   <label for="inputUser">Usuario*</label>
                   <input type="text" class="form-control" id="inputUser" placeholder="Usuario" formControlName="nuevoUsuario">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                   <label for="inputRun">RUN (opcional)</label>
-                  <input type="text" class="form-control" id="inputRun" placeholder="12.345.678-k" formControlName="nuevoUsuarioRun">
+                  <input type="text" class="form-control" id="inputRun" formatRut name="rut" maxlength="9" placeholder="RUN" formControlName="nuevoUsuarioRun">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputEmail">Correo electrónico*</label>
@@ -63,11 +63,11 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="telefono1">Teléfono de contacto 1 (opcional)</label>
-                  <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" formControlName="nuevoUsuarioTelefono1">
+                  <input type="tel" class="form-control" id="telefono1" placeholder="Teléfono 1" maxlength="9" formControlName="nuevoUsuarioTelefono1">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="telefono2">Teléfono de contacto 2 (opcional)</label>
-                  <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" formControlName="nuevoUsuarioTelefono2">
+                  <input type="tel" class="form-control" id="telefono2" placeholder="Teléfono 2" maxlength="9" formControlName="nuevoUsuarioTelefono2">
                 </div>
               </div>
 

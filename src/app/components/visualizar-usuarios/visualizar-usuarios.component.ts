@@ -3,11 +3,12 @@ import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 import { ContratanteService } from '../../services/contratante.service';
 import { Router } from "@angular/router";
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
 import {$NBSP} from "@angular/compiler/src/chars";
+import { Ng2Rut, RutValidator } from 'ng2-rut'; 
 /* Importing ToastsManager library starts*/
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
@@ -46,7 +47,9 @@ export class VisualizarUsuariosComponent implements OnInit {
     private router: Router,
     public modal:Modal,
     private toastr: ToastsManager,
-    private _vcr: ViewContainerRef
+    private _vcr: ViewContainerRef,
+    private fb: FormBuilder, 
+    private rutValidator: RutValidator
   ) {
       this.listaUsuarios = [];
       this.listaRoles = [];
