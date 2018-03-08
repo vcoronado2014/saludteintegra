@@ -554,6 +554,7 @@ export class VisualizarUsuariosComponent implements OnInit {
               || objeto.Persona.CorreoElectronico.toLowerCase().includes(this.termino.toLowerCase())
               || objeto.Rol.Nombre.toLowerCase().includes(this.termino.toLowerCase())){
             //si es igual
+            console.log(objeto);
             listaRetorno.push(objeto);
           }
           this.loading = false;
