@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import * as moment from 'moment';
 
 declare var jQuery:any;
 @Component({
@@ -31,6 +32,7 @@ export class LoginComponent {
   iconAccion = "fa-search";
   emailUser:string;
   passUser:string;
+  fecha_actual:any;
 
   constructor( private auth:ServicioLoginService,
                private router: Router,
@@ -40,6 +42,8 @@ export class LoginComponent {
                private usu: UsuarioService ){
 
   this.toastr.setRootViewContainerRef(_vcr); 
+  moment.locale('es');
+  this.fecha_actual = moment().format('L');
 }
   
   

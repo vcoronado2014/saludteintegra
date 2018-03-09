@@ -11,6 +11,7 @@ import { appSettings } from '../../appSettings';
 import { UsuarioService } from '../../services/usuario.service';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
+import { Ng2Rut, RutValidator } from 'ng2-rut'; 
 
 declare var jQuery:any;
 
@@ -44,7 +45,8 @@ export class BuscadorComponent implements OnInit {
     private _vcr: ViewContainerRef,
     public sanitizer: DomSanitizer,
     private usu:UsuarioService,
-    private modal: Modal
+    private modal: Modal,
+    private rutValidator: RutValidator
   ) {
       this.urlVisor = sanitizer.bypassSecurityTrustResourceUrl('#');
       this.toastr.setRootViewContainerRef(_vcr);

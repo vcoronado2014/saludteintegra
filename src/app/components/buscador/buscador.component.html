@@ -37,7 +37,7 @@
         </div>
         <div class="modal-body text-center">
           <p>Ingrese el RUN del paciente (Sin puntos ni guión)</p>
-          <input type="text" [(ngModel)]="rutBuscar" class="form-control" placeholder="Ingrese RUN">
+          <input type="text" [(ngModel)]="rutBuscar" class="form-control" formatRut name="rut" maxlength="9" placeholder="IngreseRUN">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Cerrar</button>

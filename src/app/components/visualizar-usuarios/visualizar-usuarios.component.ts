@@ -257,7 +257,10 @@ export class VisualizarUsuariosComponent implements OnInit {
             this.loading = false;
           }
         },
-        err => console.error(err),
+        err => {
+          console.error(err);
+          this.loading = false;
+        },
         () => console.log('get info usuarios')
       );
 
