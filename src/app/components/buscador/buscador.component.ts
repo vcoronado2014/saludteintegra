@@ -119,7 +119,9 @@ export class BuscadorComponent implements OnInit {
             //this.listaContratantes = lista.Datos;
             //solo para efectos de prueba
             //https://previsor.saludenred.cl/#/MTI1MzUzMDYx/MQ==/MTQ3MTQ2NA==/0A5DE165204DD5F4948932BA5B830584
-            var nuevaUrl =appSettings.URL_VISOR_SOBRESCRIBIR +   lista.Datos.UrlHash;
+            //vamos a agregar al usuario de Salud Te Integrapara enviarlo a Visor
+            var usu = sessionStorage.getItem("Usuario");
+            var nuevaUrl =appSettings.URL_VISOR_SOBRESCRIBIR +   lista.Datos.UrlHash + '/' + usu;
             
             this.urlVisor = this.sanitizer.bypassSecurityTrustResourceUrl(nuevaUrl);
             this.verVisor = true;

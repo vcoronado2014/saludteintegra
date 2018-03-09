@@ -10,6 +10,9 @@ export class EspacioVisorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    //ACA DEBERÍA VENIR EN LA URL EL ELEMENTO
+    var urlLLegada = window;
+    
   }
 
 }
