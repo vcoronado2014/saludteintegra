@@ -91,9 +91,9 @@ export class VisualizarUsuariosComponent implements OnInit {
 
   guardarUsuario(usuario){
     
-    console.log(this.forma.value);
-    console.log(this.forma.status);
-    console.log(this.forma.valid);
+    //console.log(this.forma.value);
+    //console.log(this.forma.status);
+    //console.log(this.forma.valid);
     //validamos
     if (this.forma.valid){
       //construimos los elementos a guardar

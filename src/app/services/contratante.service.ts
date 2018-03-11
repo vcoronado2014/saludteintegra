@@ -12,6 +12,22 @@ export class ContratanteService {
     private http: Http
   ) { }
 
+
+  putImpresion(ausId, run, ecolId, fechaAtencion) {
+      let url = appSettings.API_ENDPOINT + 'Impresion';
+      let dataGet = {
+          AusId: ausId.toString(),
+          Run: run,
+          EcolId: ecolId.toString(),
+          FechaAtencion: fechaAtencion
+      };
+
+      let data = this.http.put(url, dataGet, {
+          headers: new Headers({ 'Content-Type': 'application/json' })
+      });
+      return data;
+
+  }
   postContratantes(ecolId, rolId){
     let url = appSettings.API_ENDPOINT + 'EntidadContratante';
     let dataGet = {
