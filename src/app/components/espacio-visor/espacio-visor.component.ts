@@ -32,14 +32,10 @@ export class EspacioVisorComponent implements OnInit {
     ) {
         this.toastr.setRootViewContainerRef(_vcr);
         //let doc = new jsPDF('landscape', 'mm', 'a4', null);
+        /*
         let doc = new jsPDF();
 
-        //let doc = new jsPDF({
-        //    orientation: 'landscape',
-        //    unit: 'in',
-        //    format: [4, 2]
-        //})
-        //var paciente = this.getParameterByName('paciente', null);
+
         this.urlPdf = sanitizer.bypassSecurityTrustResourceUrl('#');
         var paciente = this.getParameterByName('paciente', null);
         var usuario = this.getParameterByName('usuario', null);
@@ -51,7 +47,7 @@ export class EspacioVisorComponent implements OnInit {
         this.atencionJson = JSON.parse(atob(atencion));
         //listo para procesar, validar antes que los elementos no esten vacios
         this.CrearReporte(this.pacienteJson, this.usuarioJson, this.atencionJson, 'mostrar', doc);
-
+        */
 
     }
     insertarImpresion(ausId, ecolId, run, fechaAtencion) {
