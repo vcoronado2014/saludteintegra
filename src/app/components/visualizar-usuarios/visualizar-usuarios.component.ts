@@ -342,7 +342,7 @@ export class VisualizarUsuariosComponent implements OnInit {
     const dialogRef = this.modal.confirm()
       .size('lg')
       .showClose(false)
-      .title('Activar Usuario')
+      .title('Eliminar Usuario')
       .keyboard(27)
       .body(`
                     <h4 class="text-center">¿Estás seguro de eliminar a ` + nombre + `?</h4>
