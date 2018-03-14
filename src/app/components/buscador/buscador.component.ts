@@ -7,7 +7,9 @@ import { ServicioVisorService } from '../../services/servicio-visor.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 /* Importing ToastsManager library ends*/
 import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
-import { appSettings } from '../../appSettings';
+//import { appSettings } from '../appSettings';
+import { environment } from '../../../environments/environment'
+//import { environment } from '../../environments/environment.prod'
 import { UsuarioService } from '../../services/usuario.service';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule, Modal, bootstrap4Mode } from '../../../../node_modules/ngx-modialog/plugins/bootstrap';
@@ -121,7 +123,7 @@ export class BuscadorComponent implements OnInit {
             //https://previsor.saludenred.cl/#/MTI1MzUzMDYx/MQ==/MTQ3MTQ2NA==/0A5DE165204DD5F4948932BA5B830584
             //vamos a agregar al usuario de Salud Te Integrapara enviarlo a Visor
             var usu = sessionStorage.getItem("Usuario");
-            var nuevaUrl =appSettings.URL_VISOR_SOBRESCRIBIR +   lista.Datos.UrlHash + '/' + usu;
+            var nuevaUrl =environment.URL_VISOR_SOBRESCRIBIR +   lista.Datos.UrlHash + '/' + usu;
             
             this.urlVisor = this.sanitizer.bypassSecurityTrustResourceUrl(nuevaUrl);
             this.verVisor = true;

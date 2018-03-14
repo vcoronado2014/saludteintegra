@@ -89,7 +89,7 @@ export class LoginComponent {
     );
  
   }
-  checkUser(loginRecuperar){
+  checkUser(){
     if(this.loginRecuperar.length == 0 ){
       this.clearData();
     }

@@ -1,7 +1,9 @@
 import { Injectable, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
-import { appSettings } from '../appSettings';
+//import { appSettings } from '../appSettings';
+import { environment } from '../../environments/environment'
+//import { environment } from '../../environments/environment.prod'
 
 import 'rxjs/add/operator/map';
 
@@ -15,7 +17,7 @@ export class UsuarioService {
    }
 
   postUsers(ecolId, rolId){
-    let url = appSettings.API_ENDPOINT + 'Usuario';
+    let url = environment.API_ENDPOINT + 'Usuario';
     let dataGet = {
        EcolId: ecolId,
        RolId: rolId
@@ -41,7 +43,7 @@ export class UsuarioService {
     telefonoContactoDos,
     run
   ){
-    let url = appSettings.API_ENDPOINT + 'Usuario';
+    let url = environment.API_ENDPOINT + 'Usuario';
     let dataGet = {
       NombreUsuario: nombreUsuario,
       EcolId: ecolId.toString(),
@@ -65,7 +67,7 @@ export class UsuarioService {
 
   desactivarUser(ausId){
 
-     let url = appSettings.API_ENDPOINT + 'Usuario';
+     let url = environment.API_ENDPOINT + 'Usuario';
 
     let data = this.http.delete(url, { params: {Id: ausId.toString(), TipoOperacion: '0' }});
     return data;
@@ -74,7 +76,7 @@ export class UsuarioService {
   }
   activarUser(ausId){
 
-    let url = appSettings.API_ENDPOINT + 'Usuario';
+    let url = environment.API_ENDPOINT + 'Usuario';
 
     let data = this.http.delete(url, { params: {Id: ausId.toString(), TipoOperacion: '1' }});
     return data;
@@ -83,7 +85,7 @@ export class UsuarioService {
   }
   deleteUser(ausId){
 
-    let url = appSettings.API_ENDPOINT + 'Usuario';
+    let url = environment.API_ENDPOINT + 'Usuario';
 
     let data = this.http.delete(url, { params: {Id: ausId.toString(), TipoOperacion: '2' }});
     return data;
@@ -92,7 +94,7 @@ export class UsuarioService {
   }
   getUserId(ausId){
 
-    let url = appSettings.API_ENDPOINT + 'Usuario?id=' + ausId;
+    let url = environment.API_ENDPOINT + 'Usuario?id=' + ausId;
 
     let data = this.http.get(url);
     return data;
@@ -102,7 +104,7 @@ export class UsuarioService {
   
   getUserName(nombreUsuario){
     
-        let url = appSettings.API_ENDPOINT + 'Usuario?nombreUsuario=' + nombreUsuario;
+        let url = environment.API_ENDPOINT + 'Usuario?nombreUsuario=' + nombreUsuario;
     
         let data = this.http.get(url);
         return data;
@@ -111,7 +113,7 @@ export class UsuarioService {
 //este retorna en la data un True o False      
 getCambiarClave(email, nombreUsuario, password){
   
-      let url = appSettings.API_ENDPOINT + 'Clave?email=' + email + '&nombreUsuario=' + nombreUsuario + '&password=' + password;
+      let url = environment.API_ENDPOINT + 'Clave?email=' + email + '&nombreUsuario=' + nombreUsuario + '&password=' + password;
   
       let data = this.http.get(url);
       return data;
@@ -119,7 +121,7 @@ getCambiarClave(email, nombreUsuario, password){
     }
 //este retorna en la Data un True o False
     postRecuperarClave(email, nombreUsuario, password){
-      let url = appSettings.API_ENDPOINT + 'Clave';
+      let url = environment.API_ENDPOINT + 'Clave';
       let dataGet = {
          Email: email,
          NombreUsuario: nombreUsuario,

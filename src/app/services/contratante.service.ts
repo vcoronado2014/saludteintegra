@@ -1,7 +1,9 @@
 import { Injectable, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
-import { appSettings } from '../appSettings';
+//import { appSettings } from '../appSettings';
+import { environment } from '../../environments/environment'
+//import { environment } from '../../environments/environment.prod'
 
 import 'rxjs/add/operator/map';
 
@@ -14,7 +16,7 @@ export class ContratanteService {
 
 
   putImpresion(ausId, run, ecolId, fechaAtencion) {
-      let url = appSettings.API_ENDPOINT + 'Impresion';
+      let url = environment.API_ENDPOINT + 'Impresion';
       let dataGet = {
           AusId: ausId.toString(),
           Run: run,
@@ -29,7 +31,7 @@ export class ContratanteService {
 
   }
   postContratantes(ecolId, rolId){
-    let url = appSettings.API_ENDPOINT + 'EntidadContratante';
+    let url = environment.API_ENDPOINT + 'EntidadContratante';
     let dataGet = {
        EcolId: ecolId, 
        RolId: rolId 

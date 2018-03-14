@@ -89,7 +89,7 @@ export class VisualizarUsuariosComponent implements OnInit {
     }
   }
 
-  guardarUsuario(usuario){
+  guardarUsuario(){
     
     //console.log(this.forma.value);
     //console.log(this.forma.status);

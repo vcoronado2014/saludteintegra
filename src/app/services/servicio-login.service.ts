@@ -1,7 +1,9 @@
 import { Injectable, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
-import { appSettings } from '../appSettings';
+//import { appSettings } from '../appSettings';
+import { environment } from '../../environments/environment'
+//import { environment } from '../../environments/environment.prod'
 
 import 'rxjs/add/operator/map';
 
@@ -24,7 +26,7 @@ export class ServicioLoginService{
 
   login(usuario, password){
 
-    let url = appSettings.API_ENDPOINT + 'Login';
+    let url = environment.API_ENDPOINT + 'Login';
     let dataGet = { usuario: usuario, password: password };
 
    return this.http.post(url, dataGet, {headers: new Headers({'Content-Type': 'application/json'})})
