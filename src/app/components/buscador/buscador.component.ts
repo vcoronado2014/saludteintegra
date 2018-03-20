@@ -33,6 +33,7 @@ export class BuscadorComponent implements OnInit {
   cambioContrasena2;
   verMantenedorUsuario:boolean = false;
   verVisor:boolean = false;
+  verBotonVisor: boolean = false;
   //agregado por victor
   rutBuscar: string;
   urlVisor: SafeResourceUrl;
@@ -64,6 +65,13 @@ export class BuscadorComponent implements OnInit {
       this.nombreCompleto = this.usuario.Persona.Nombres + ' ' + this.usuario.Persona.ApellidoPaterno + ' ' + this.usuario.Persona.ApellidoMaterno;
       this.nombreEntidadContratante = this.usuario.EntidadContratante.RazonSocial;
       this.rolUsuario = this.usuario.Rol.Nombre;
+      if (this.usuario.ParametrosEcol){
+        if (this.usuario.ParametrosEcol.TieneVisor){
+          if (this.usuario.ParametrosEcol.TieneVisor == 1){
+            this.verBotonVisor = true;
+          }
+        }
+      }
       console.log(this.usuario);
     }
     else{

@@ -6,7 +6,7 @@
     </a>
   <div class="form-inline float-right">
     <span class="span_fecha"> {{fecha_actual}}</span>
-    <button class="btn_buscar btn-sm btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal">
+    <button class="btn_buscar btn-sm btn my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal" *ngIf="verBotonVisor">
       <i class="fas fa-search"></i> Buscar Paciente
     </button>
     <div class="nav-item dropdown">
